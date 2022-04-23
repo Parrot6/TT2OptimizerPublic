@@ -1,0 +1,612 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    line-height: 1.1 !important;
+    overflow-x: hidden;
+  }
+  @media (max-width: 768px) {
+    html, body {
+        line-height: 1 !important;
+        font-size: .9rem !important;
+    }
+    /* CSS that should be displayed if width is equal to or less than 800px goes here */
+  }
+  input, select {
+        width: calc(100% - 2px);
+  }
+  .sheet {
+    display: none;
+  }
+  .sheetNavigation {
+    border-bottom: 2px solid black;
+    background:rgb(230, 230, 230) ;
+  }
+  .sheetNavigation .sheetNavigationButton {
+      background-color: rgb(186, 186, 186);
+      padding: 4px;
+      margin: 4px;
+      border: 2px solid rgba(36, 80, 255, 0);
+      color: white;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+  }
+  .sheetNavigation > div.active {
+    background-color: rgba(128, 128, 128, 0);
+    border: 2px solid rgb(36, 80, 255);
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+}
+.importCol {
+  padding-top: 1px;
+  padding-bottom: 2px;
+  border-top: 1px solid black;
+  border-left: .5px solid black;
+  border-right: .5px solid black;
+}
+strong {
+  line-height: 1.4;
+  white-space: nowrap;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 100%;
+}
+  .parrotInfo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-weight: 700;
+      font-size: .7rem;
+      z-index: 1000;
+      text-align: right;
+      padding-right: 4px;
+      padding-bottom: 4px;
+  }
+  label {
+      align-self: center;
+      width: 100%;
+      line-height: 100%;
+      vertical-align: middle;
+      text-align: center;
+      margin: 0px !important;
+      margin-left: 4px !important;
+  }
+  .alignLabelVert {
+    margin: auto;
+    font-weight: 500;
+  }
+  .col-gutters {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+      margin-left: 0px;
+      margin-right: 0px;
+  }
+  .controllerButton{
+      width: calc(100% - 4px);
+      padding: 4px;
+      height: auto;
+      border-radius: 2px;
+      margin: 2px;
+      margin-left: 2px;
+      margin-right: 0px;
+      background-color: #262626;
+      color: white;
+      border-color: #444444;
+      border-width: 5px;
+      border-style: solid;
+      font-weight: 600;
+  }
+  .controllerButton:hover{
+    border-color: var(--highlight);
+   }
+   .controllerButtonImport {
+    width: calc(100%);
+    padding: 2px;
+    border-radius: 8px;
+    font-size: .8rem;
+    margin: 2px;
+    margin-left: 2px;
+    margin-right: 0px;
+    background-color: #262626;
+    color: white;
+    border-color: #444444;
+    border-width: 3px;
+    border-style: solid;
+    font-weight: 600;
+   }  
+   .controllerButtonImport:hover{
+    border-color: var(--highlight);
+   }  
+    #SkillRankings {
+        padding: 0px;
+    }
+    @media (max-width: 768px) {
+        .skillRankingRow {
+            line-height: .9 !important;
+            font-size: .7rem !important;
+            padding-right: 2px !important;
+            padding-left: 2px !important;
+            height: 23px  !important;
+            font-weight: 600 !important;
+        }
+        .SkillRankingName{
+            padding-left: 2px !important;
+            padding-right: 0px !important;
+        }
+        /* CSS that should be displayed if width is equal to or less than 800px goes here */
+      }
+
+  .skillRankingRow {
+    border: 1px black solid;
+    color: rgba(255, 255, 255, 0.953);
+    border-radius: 8px;
+    padding-right: 8px;
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    font-size: .9rem;
+    height: 25px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .skillRankingRow:hover {
+    background-color: var(--highlight) !important;
+    background-image: linear-gradient(to right, var(--highlight), var(--highlight));
+    color: black;
+    font-weight: 600;
+  }
+  .SkillRankingName{
+      flex: 1 0 60%;
+      display: inline-block;
+      padding-left: 2px;
+      padding-right: 0px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+  }
+  .SkillRankingValue{
+      overflow: hidden;
+      flex: 0 0 22%;
+      display: inline-block;
+      padding-right: 4px;
+  }
+  .grid2x2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .grid2x2 > div {
+    border-radius: 16px;
+    border: ridge;
+    border-color: darkslategray;
+    display: flex;
+    height: 350px; 
+    justify-content: center;
+    flex-direction: column;
+  }
+  .grid2x2 > div > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
+  .levelButton{
+    border: 0px; 
+    height: 35%;
+    width: 100%;
+    padding: 0px;
+    font-weight: 900;
+    padding-bottom: 0px;
+    color: white;
+    border-width: 1px;
+    text-align:center;
+    vertical-align: middle;
+    position: absolute;
+    line-height: 8px;
+  }
+  #warlordTree .levelButton {
+      background-color: var(--warlordDark);
+  }
+  #knightTree .levelButton {
+    background-color: var(--knightDark);
+    }
+    #sorcererTree .levelButton {
+        background-color: var(--sorcererDark);
+    }
+    #rogueTree .levelButton {
+        background-color: var(--rogueDark);
+    }
+    #petTree .levelButton {
+      background-color: var(--petDark);
+    }
+    #alchemistTree .levelButton {
+      background-color: var(--alchemistDark);
+    }
+  .levelButton:hover {
+      background-color: rgb(213, 213, 213);
+      color: var(--highlight);
+  }
+  .levelUpButton{  
+      top: 0;
+      left: 0;
+      border-bottom: 1px ridge black;
+  }
+  .ignoreButton {
+      border-width: .15rem;
+      border-right: 0px;
+      border-bottom: 0px;
+      border-radius: 8px 0px 0px 0px;
+      float: right;
+      bottom: 0px;
+      position: absolute;
+      right: 0px;
+      padding: 1px;
+      background-color: gray;
+      color: white;
+  }
+  .ignoreButton:hover {
+      font-weight: 600;
+      padding: 4px;
+  }
+  .ignoreButton.ignored {
+    background-color: rgb(255, 125, 125);
+    color: black;
+    }
+    .ignoreButton.active {
+        background-color: rgb(191, 228, 196);
+        color: black;
+     }
+  .levelDownButton{
+      left: 0;
+      bottom: 0;
+    border-top: 1px ridge black;
+    }
+  .skillCell{
+      font-weight: 500;
+      flex-basis: 30%;
+      height: 55px;
+      border-style: solid;
+      border-width: .2px;
+      border-radius: 8px;
+      margin: 2px;
+      display: flex;
+      overflow: hidden;
+  }
+  .skillCellRogue {
+    border: 2px solid #63be5d;
+  }
+  .skillCellKnight {
+    border: 2px solid #e4e4e4;
+  }
+  .skillCellPet {
+    border: 2px solid #f26738;
+  }
+  .skillCellWarlord {
+    border: 2px solid #fccb1f;
+  }
+  .skillCellSorcerer {
+    border: 2px solid #5bb4e8;
+  }
+  .skillCellAlchemist {
+    border: 2px solid #eef560;
+  }
+  .skillCellEff {
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+    bottom: 0;
+    border-radius: 0px 8px 0px 0px;
+      width: 70%;
+      text-align: left;
+      text-indent: 4px;
+      background-color: rgba(255, 255, 255, 0.57);
+  }
+  .treeSp {
+      border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    align-self: flex-end;
+    width: 50px;
+    padding: 2px;
+    margin-right: 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+  }
+  .skillCellLevel{
+    position: relative;
+    text-align: center;
+    min-width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: 700;
+      height: 100%;
+      text-overflow: ellipsis;
+      background-color: rgba(255, 255, 255, 0.659);
+  }
+  .skillCellName{
+      line-height: 16px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.659);
+    width: 100%;
+    padding-left: 7px;
+    overflow: hidden;
+    text-align: left;
+    flex-direction: column;
+    flex: 1 1 80%;
+      height: 100%;
+      text-overflow: ellipsis;
+  }
+  .empty {
+      border-style: none;
+      background-color: transparent;
+  }
+  .box { margin: 2px; }
+
+  .box0 { background-color: #ff8700; 
+    background-image: linear-gradient(to bottom right, #1d1d1d, #9e9e9e);}
+  .box1 { background-color: #ff8700; 
+    background-image: linear-gradient(to bottom right, #201e28, #ba5920);}
+  .box2 { background-color: #fec200;
+    background-image: linear-gradient(to bottom right, #201e28, #b38b0a);
+    }
+  .box3 { background-color: #00b5da; 
+    background-image: linear-gradient(to bottom right, #201e28, #09879e);
+    }
+  .box4 { background-color: #7cc400; 
+    background-image: linear-gradient(to bottom right, #201e28, #2cb975);
+    }
+  .box5 { background-color: #7cc400; 
+    background-image: linear-gradient(to bottom right, #291f52, #ae60ee);
+    }
+  .buildTypeSection{
+    font-weight: 500;
+    padding: 4px;
+    border-bottom: 3px solid black;
+  }
+  .PetToLevel {
+    background-color: #ff8700;
+    background-image: linear-gradient(to left, #7e3d17, #ba5920);
+  }
+  .WarlordToLevel {
+    background-color: #fec200;
+    background-image: linear-gradient(to left, #8a711d, #dab22f);
+  }
+  .SorcererToLevel {
+    background-color: #00b5da;
+    background-image: linear-gradient(to left, #044a57, #0c9bb4);
+  }
+  .RogueToLevel {
+    background-color: #7cc400;
+    background-image: linear-gradient(to left, #145536, #2cb975);
+  }
+  .KnightToLevel {
+    background-color: #828282;
+    background-image: linear-gradient(to left, #484848,#919191 );
+  }
+  .AlchemistToLevel {
+    background-color: #828282;
+    background-image: linear-gradient(to left, #5f0a8a,#9f3aa9 );
+  }
+  :root {
+    --highlight: rgb(128, 255, 43);
+    --knightDark: #575757;
+    --petDark: #d03000;
+    --alchemistDark: #8211dd;
+    --warlordDark: #f7c110;
+    --rogueDark: #206900;
+    --sorcererDark: #005b78;
+  }
+  .plusOne {
+    background-color: rgba(255, 255, 255, 0);
+    position: absolute;
+    z-index: 100;
+    right: -10px;
+    line-height: .8rem;
+    font-size: .7rem;
+    font-weight: 800;
+    border-radius: 4px;
+    padding-left: 1px;
+    padding-right: 1px;
+    background-color: white;
+    padding-top: 0px;
+        border-radius: 2px;
+    }
+    .plusOneSingleVal {
+        right: 0 !important;
+    }
+    .plusOneRogue {
+        color: var(--rogueDark);
+    }
+    .plusOneWarlord {
+        color: #424901;
+    }
+    .plusOneKnight {
+        color: var(--knightDark);
+    }
+    .plusOneSorcerer {
+        color: var(--sorcererDark);
+    }
+    .SkillRankingRank{
+      padding-left: 2px !important;
+      color: rgb(255, 255, 255);
+      font-weight: 800;
+      padding-right: 1px !important;
+  }
+  @media (max-width: 500px) {
+
+    .skillRankingRow {
+        line-height: .9 !important;
+        font-size: .6rem !important;
+        padding-right: 2px !important;
+        padding-left: 2px !important;
+        height: 20px  !important;
+        font-weight: 500 !important;
+    }
+    .SkillRankingName{
+        padding-left: 0px !important;
+        padding-right: 1px !important;
+    }
+    .SkillRankingRank{
+        padding-right: 2px;
+        padding-left: 2px;
+    }
+    .skillCellEff {
+        overflow: hidden;
+        position: absolute;
+        left: 0px;
+        bottom: 0;
+        line-height: .8rem;
+        font-size: .6rem;
+        border-radius: 0px 8px 0px 0px;
+          width: 70%;
+          text-align: left;
+          text-indent: 1.5px;
+          background-color: rgba(255, 255, 255, 0.57);
+      }
+      .grid2x2 > div {
+        border-radius: 16px;
+        border: ridge;
+        border-color: darkslategray;
+        padding-top: 4px;
+        display: flex;
+        height: auto;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .plusOne {
+        right: -7px !important;
+    }
+    .plusOneSingleVal {
+        right: -0px !important;
+    }
+
+    .treeSp {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        margin-top: 4px;
+        margin-right: 6px;
+    }
+      .skillCellLevel{
+        display: flex;
+        min-width: 15px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-weight: 700;
+          height: 100%;
+          text-overflow: ellipsis;
+          background-color: rgba(255, 255, 255, 0.659);
+      }
+      .skillCellName{
+          overflow:hidden;
+        background-color: rgba(255, 255, 255, 0.659);
+        font-size: .7rem;
+        display: flex;
+        padding-left: 2px;
+        flex: 1 1 80%;
+          height: 100%;
+          text-overflow: ellipsis;
+      }
+    /* CSS that should be displayed if width is equal to or less than 800px goes here */
+     }
+     .artifactHeader {
+       padding: 4px;
+     }
+     .artifactRow {
+       border-top: 4px outset #807b78;
+       border-bottom: 4px inset #202028;
+       background-color: #303030;
+       padding: 4px;
+       line-height: 1.2rem;
+       align-items: center;
+     }
+     .artifactRank {
+       color: gold;
+     }
+     .artifactName {
+       font-weight: 600;
+       margin-left: 10px;
+       margin-right: 10px;
+       color: #f97534;
+       overflow: hidden;
+       white-space: nowrap;
+     }
+     .artifactEnchanted {
+       color: #edc84c;
+       font-weight: 500;
+     }
+     .artifactButton {
+       border: 1px solid #937dc1;
+       background-color: #6f4fb2;
+       color: white;
+     }
+     .artifactLevel {
+       color: #51b9f0;
+     }
+     .artifactButton .disabled {
+      border: 1px solid #a6a6a6;
+      background-color: #898989;
+      color: #ffffff;
+     }
+     .artifactDiscovered {
+       background-color: #16151a;
+       color: #898896;
+       font-weight: 600;
+       margin: 6px;
+     }
+     #artifactOptimizer {
+       background-color: #16151a;
+     }
+     .relics{
+       color: white;
+       font-weight: 600;
+     }
+     .relics input:disabled {
+       color: white;
+     }
+     .artifactUpgradeHeader{
+       font-weight: 700;
+       font-size: 1.5rem;
+       color: #edc84c;
+       border-bottom: 2px solid #edc84c;
+       padding-left: 0px !important;
+      padding: 4px;
+       border-top:  2px solid #edc84c;
+     }
+     .rankTop10 {
+       font-weight: 900;
+       background-color: rgba(0, 0, 0, 0.652);
+       border-radius: 6px;
+       border-left: 2px solid #000000;
+       border-right: 2px solid #000000;
+     }
+     .rankTop5 {
+      font-weight: 900;
+      background-color: rgba(0, 0, 0, 0.85);
+      border-radius: 6px;
+      border-left: 2px solid #edc84c;
+      border-right: 2px solid #edc84c;
+    }
+    .rankTop1 {
+      font-weight: 900;
+      background-color: rgb(0, 0, 0);
+      border-radius: 6px;
+      border-left: 3px solid #edc84c;
+      border-right: 3px solid #edc84c;
+    }
+    select{
+      font-weight: 500;
+      text-align-last: center;
+      padding-right: 20px;
+      direction: rtl;
+  }
+  option {
+    font-weight: 500;
+}

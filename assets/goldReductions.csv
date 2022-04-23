@@ -1,0 +1,5 @@
+Types     , pHoM, Chesterson, HoM, All, ChestersonChance, Fairy, Boss, MultiSpawn, Stealth, Inactive, Rogue, UnskilledGold
+Fairy     , 0   , 1         , .6 , 1  , 1               , 1    , 0   , 0         , 1      , 0       , 1    , 2
+All       , 0   , 0         , 1  , 1  , 0               , 0    , 1   , 0         , 1      , 0       , 1    , 2
+Boss      , 1   , 0         , .6 , 1  , 0               , 0    , 1   , 0         , 1      , 0       , 1    , 2
+Chesterson, 0   , 1         , 1  , 1  , 1               , 0    , 0   , 1         , 1      , 0       , 1    , 2

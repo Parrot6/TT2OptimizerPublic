@@ -1,0 +1,810 @@
+<html>
+    <!--🦍 💎 🍌 Buy, Hodl 🍌 💎 🦍-->
+    <!--Author: Parrot6
+        Discord: Parrot6#7225
+        Reddit: u/Killerparrot6
+    -->
+    <head>
+        <title>TT2 SP Optimizer</title>
+        <link rel="stylesheet" href="assets/app.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+        <script src="scripties/jquery.js"></script>
+        <script src="scripties/underscore.js"> </script>
+        <script src="scripties/backbone.js"></script>
+        <script src="scripties/treeStructure.js"></script>
+        <script src="scripties/calculationsSP.js"></script>
+        <script src="scripties/spTreeClassObject.js"></script>
+        <script src="scripties/staticDataObjects.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="manifest.json">
+    </head>
+
+    <body>
+        <div class="sheetNavigation row no-gutters">
+            <div id="sp" class="sheetNavigationButton col no-gutters text-center active"><a href="#sp">SP Optimizer</a></div>
+            <div id="artifact" class="sheetNavigationButton col no-gutters text-center"><a href="#artifact">Artifact Optimizer</a></div>
+            <div id="other" class="sheetNavigationButton col-auto no-gutters text-center px-1"><a href="#other">Other Projects</a></div>
+            <div class="col no-gutters text-center"><button style="height: calc(100% - 6px); white-space: nowrap;" class="controllerButtonImport pr-1" onclick="userHardReload()">v5.16.0 (Click To Clear Cache+Reload)</button></div>
+        </div>
+        <div class="row buildTypeSection no-gutters">
+            <div class="col-md-3 col-sm-12">
+                <div class="row no-gutters">
+                    <div class="col-auto alignLabelVert">
+                        <label for="dmgchoices">Dmg Type:&nbsp</label>
+                    </div>
+                    <div class="col">
+                        <select name="dmgchoices" id="buildDmgType">
+                        </select>
+                    </div>
+                </div>
+                <div class="row no-gutters pt-1">
+                    <div class="col-auto alignLabelVert">
+                        <label for="cars">Gold Type:&nbsp</label>
+                    </div>
+                    <div class="col">
+                        <select name="goldchoices" id="buildGoldType">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col spTopChoices">
+                <div class="row  no-gutters">
+                    <div class="col-auto alignLabelVert">
+                        <label>Sp Spent:&nbsp</label>
+                    </div>
+                    <div class="col-12 col-sm">
+                        <input id="spSpent" disabled value="0"/>
+                    </div>
+                </div>
+                <button class="controllerButton" onclick="resetTree()">Reset Tree</button>
+            </div>
+            <div class="col spTopChoices">
+                <div class="row no-gutters">
+                    <div class="col-auto alignLabelVert">
+                        <label>Starting Sp:&nbsp</label>
+                    </div>
+                    <div class="col-12 col-sm">
+                        <input onchange="updateStartingSp(this)" id="startingSp"/>
+                    </div>
+                </div>
+                <button class="controllerButton" onclick="spendAllSP()">Spend All Available Sp</button>
+            </div>
+            <div class="col artifactTopChoices">
+                <div class="row no-gutters">
+                    <div class="col-3 alignLabelVert">
+                        <label for="cars">Hero Type:&nbsp</label>
+                    </div>
+                    <div class="col">
+                        <select onchange="processArtifacts(artifactCSV)" id="artifactHeroType">
+                            <option value="Ranged">Ranged</option>
+                            <option value="Melee">Melee</option>
+                            <option value="Mage">Mage</option>
+                            <option value="All">Equal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-3 alignLabelVert">
+                        <label for="cars">Ground/Flying:&nbsp</label>
+                    </div>
+                    <div class="col">
+                        <select onchange="processArtifacts(artifactCSV)" id="artifactFlyingGroundType">
+                            <option value="Flying">Flying</option>
+                            <option value="Ground">Ground</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-3 alignLabelVert">
+                        <label for="cars">Artifact View:</label>
+                    </div>
+                    <div class="col">
+                        <select onchange="artifactViewToggle()" id="artifactViewChoice">
+                            <option value="True">Show Upgrades Only</option>
+                            <option value="False">Show Artifacts and Upgrades</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 artifactTopChoices text-center">
+                <div id="artifactsDiscovered" class="mt-1">Artifacts: 98/98</div>
+                <div id="enchantmentsDiscovered" class="mt-2">Enchantments: 34/34</div> 
+            </div>
+        </div>
+        <div class="sheet active" id="spOptimizer">
+            <div class="row no-gutters">
+                <div class="col-12 col-md-10 no-gutters">
+                    <div class="row no-gutters grid2x2">
+                        <div id="knightTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box0">
+                        </div>
+                        <div id="petTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box1">
+                        </div>
+                    <!-- </div>
+                    <div class="row no-gutters grid2x2"> -->
+                        <div id="warlordTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box2">
+                        </div>
+                        <div id="sorcererTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box3">
+                        </div>
+                    <!-- </div>
+                    <div class="row no-gutters grid2x2"> -->
+                    <div id="rogueTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box4">
+                    </div>
+                    <div id="alchemistTree" class="col-6 col-sm-6 col-xl-4 no-gutters box box5 text-center">
+                        Soon™️
+                    </div>
+                    </div>
+                </div>
+                <div class="col-3 col-md-2 no-gutters">
+                        <Strong>Skill Rankings:</Strong>
+                        <div id="SkillRankings">
+
+                        </div>
+                </div>
+                <div class="col-9 col-md-12 no-gutters">
+
+                    <div class="row no-gutters">
+                        <div class="col importCol col-gutters">
+                            <Button class="controllerButtonImport" onclick="importData(false)">Import Stats from Clipboard</Button>
+                            <input id="importPaste" onchange="importData(this.value)" placeholder="OR paste here (firefox)" type="text">
+                        <!--- <Button class="controllerButtonImport" onclick="importData(true)">Import Stats from Cookies (TODO)</Button> --->
+                            <div class="row no-gutters">
+                                <div class="col-auto alignLabelVert">
+                                    <label><Strong>Skills&nbsp</Strong></label>
+                                </div>
+                                <div class="col">
+                                    <button id="loadSkills" onclick="loadSkillsFrom(playerSkills)" class="controllerButtonImport">Load Skills</button>
+                                </div>
+                                
+                            </div>
+                            <div id="Skills">
+                                
+                            </div>
+                        </div>
+                        <div class="col importCol col-gutters">
+                            <div><Strong>Equipment Sets</Strong>
+                            <div id="EquipmentSets">
+                                
+                            </div>
+                        </div> 
+                        </div>
+                        <div class="col importCol col-gutters">
+                            <div class="row no-gutters">
+                                <div>
+                                    <Strong>Statistics&nbsp</Strong>
+                                </div>
+                            </div>
+                            <div id="Probabilities">
+                                
+                            </div>
+                        </div>
+                        <div class="col importCol col-gutters">
+                            <div id="Passives">
+                                <Strong>Passives</Strong>
+                            </div>
+                        </div>
+                        <div class="col importCol col-gutters">                    
+                            <div id="PlayerStatistics">
+                            <Strong>Player Stats</Strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sheet" id="artifactOptimizer">
+            <div class="row no-gutters">
+                <div class="col-12 no-gutters">
+                <div class="row relics px-1 py-1">
+                    <div class="col-3 pr-0" style="overflow: hidden;">
+                        <div class="row">
+                            <div class="col-auto pr-0">Relics Available:</div>
+                            <div class="col-md pl-md-1 col-sm-12 pt-2 pt-md-0"><input onchange="availableRelicsUpdated(this)" id="relicsAvailable"></div>
+                        </div>
+                    </div>
+                    <div class="col-3 pl-1 pr-0">
+                        <div class="row">
+                         <div class="col-auto pr-0">Relics Earned:</div>
+                         <div class="col-md pl-md-1 col-sm-12 pt-2 pt-md-0"><input id="relicsSpent" disabled type="number" value="112341231231"></div>   
+                        </div>
+                    </div>
+                    <div class="col-6 pl-1">
+                        
+                        <div class="row no-gutters">
+                           <div class="col-6 pr-0"><button class="controllerButtonImport" onclick="artifactImport(false)">Import Clipboard</button></div>
+                        <div class="col-6 pl-1"><input id="artifactPasteImport" type="text" onchange="artifactImport(this.value)"  placeholder="OR Paste Export Here"/></div> 
+                        </div>
+                        <div class="row py-1 no-gutters">
+                            <select onchange="updateUpgradeButton(this.value)" style="text-align: center" class="artifactButton">
+                                <option style="text-align: center" value="1">Spend 1%</option>
+                                <option selected="selected" value="5">Spend 5%</option>
+                                <option value="25">Spend 25%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div id="artifactHolder" class="col-md col-sm-12">
+
+            </div>
+            <div id="aritactSuggestions" class="col-md col-sm-12 px-1">
+
+            </div>
+        </div>    
+        </div>
+        <div class="sheet mx-2 my-1" id="otherProjects">
+            <div class="row no-gutters text-center">
+                <h4>Check out my other projects!</h4>
+            </div>
+            <div class="row no-gutters"><b>Quenched:</b>&nbsp;<a href="https://www.imquenched.com">Quenched Site</a></div>
+            <div class="row no-gutters pb-1">Find breweries in the United States! Favorite breweries for later, add new breweries, post photos from your favorite breweries.</div>
+            <div class="row no-gutters"><b>Web App:</b>&nbsp;<a href="https://www.imquenched.com/app">Quenched App</a></div>
+            <div class="row no-gutters">Designed for mobile use but also great for use in your browser, or download from android play store.</div>
+            <div class="row no-gutters mt-4"><b>Acrylic Paintings:&nbsp;</b> Once I get some finished...</div>
+        </div>
+    </body>
+    <script>
+        function toggleTab(button){
+            var items = document.getElementsByClassName("sheetNavigationButton");
+            Array.prototype.forEach.call(items, function(el) {
+                el.classList.remove('active');
+            });
+            button.classList.add("active");
+            var sheets = document.getElementsByClassName("sheet");
+            Array.prototype.forEach.call(sheets, function(el) {
+                el.classList.remove('active');
+                el.style.display = "none";
+            });
+            switch(button.id){
+                case "sp":
+                    spOptimizer.style.display = "block";
+                    break;
+                case "artifact":
+                    artifactOptimizer.style.display = "block";
+                    break;
+                default: spOptimizer.style.display = "block";
+            }
+            button.classList.add("active");
+        }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+            .register('./sw.js')
+            .then((reg) => { console.log('Service Worker Registered', reg); })
+            .catch((error) => { console.log('Service Worker Failed.', error)})
+        }
+
+        var SPJsonArray = [];
+        
+        var SPreductions = {};
+        var Goldreductions = {};
+        
+        var SelectedBuildDamage = BuildDamageOptions.Ship;
+        var SelectedGoldOption = BuildGoldOptions.phom;
+        var heroSkills = {};
+        var playerProfileStats = {};
+        var playerSkills = {};
+        var playerArtifacts = {};
+        var playerPassives = {}
+        var importedStats = [];
+        
+        var spSpent = 0;
+        var startingSp = 0;
+        var TI;
+        var enhancedEfficiency = true;
+        var SearingLight;
+        var levelUpButton;
+        var levelDownButton;
+        var rankingBoxRankTemplate;
+        var rankingBoxNameTemplate;
+        var rankingBoxValueTemplate;
+
+        /**
+         * First thing called, will load in all the CSV data and start processing the data for each
+         * 
+         **/
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "assets/reductions.csv",
+                dataType: "text",
+                success: function(data) {
+                    processReductions(data);
+                    $.ajax({
+                    type: "GET",
+                    url: "assets/goldReductions.csv",
+                    dataType: "text",
+                    success: function(data) {
+                        processGoldReductions(data);
+                        $.ajax({
+                        type: "GET",
+                        url: activeArtifactCsv,
+                        dataType: "text",
+                        success: function(data) {
+                            artifactCSV = data;
+                            processArtifacts(data);
+                            $.ajax({
+                            type: "GET",
+                            url: activeSpCsv,
+                            dataType: "text",
+                            success: function(data) {
+                                initialTreeData = data;
+                                processData();
+                            }
+                    });
+                    }
+                    });
+                    }
+                     });
+                }
+            });
+            
+        });
+
+        var initialTreeData = null;
+        /**
+         * Processes the 'initialTreeData' JSON object
+         * populated each individual tree array
+         **/
+        function processData() { 
+                    allText = initialTreeData;
+                    var allTextLines = allText.split(/\r\n|\n/);
+                    var headings = allTextLines[0].split(',');
+                    console.log(headings);
+                    SPJsonArray = [];
+                    var pv = 0;
+                    for (var i = 1; i < allTextLines.length; i++ ) {
+                        var tarr = {};
+                        tarr["Level"] = 0;
+                        var currentLine = allTextLines[i].split(',');
+                        for (var j=0; j<headings.length; j++) {
+                            tarr[headings[j].trim()] = currentLine[j].trim();
+                        }
+                        if(typeof nameConversions[tarr['Name']] !== 'undefined') {
+                            if(tarr['Name'] == "Phantom Vengeance" && pv < 1) {
+                                pv++
+                            } else {
+                                tarr['Name'] = nameConversions[tarr['Name']];
+                            }
+                        }
+                        //Convert their CSV bonus type to a item of the Types list
+                        console.log(tarr, typeConversions[tarr['BonusTypeA']]);
+                        tarr['BonusTypeA'] = typeConversions[tarr['BonusTypeA']];
+                        //Ignore set off by default
+                        tarr['Ignore'] = false;
+                        //Add this finished Skill Row to the SPJsonArray
+                        SPJsonArray.push(tarr);
+                        //Track this particular skill with a variable for easy reference later
+                        if(tarr['Name'] == "Tactical Insight"){
+                                    TI = tarr;
+                        }
+                        //Track this particular skill with a variable for easy reference later
+                        if(tarr['Name'] == "Searing Light"){
+                                    SearingLight = tarr;
+                        }
+                    }
+                    /**
+                     * populate each tree array with JSON of just the given Class
+                     **/
+                    populateTrees();
+                    
+                    //Create the drop down options for build types
+                    var temp = document.createDocumentFragment();
+                    for(var key of Object.keys(BuildDamageOptions)){
+                        var opt = document.createElement('option');
+                        opt.value = BuildDamageOptions[key];
+                        opt.innerHTML = BuildDamageOptions[key];
+                        temp.appendChild(opt);
+                    }
+                    document.getElementById('buildDmgType').appendChild(temp);
+                    document.getElementById('buildDmgType').onchange = function(e){
+                            ChangeDamageType();
+                            refreshSkills();
+                            processArtifacts(artifactCSV);
+                        }
+
+                    //Create the drop down options for gold types
+                    var temp = document.createDocumentFragment();
+                    for(var key of Object.keys(BuildGoldOptions)){
+                        var opt = document.createElement('option');
+                        opt.value = BuildGoldOptions[key];
+                        opt.innerHTML = BuildGoldOptions[key];
+                        temp.appendChild(opt);       
+                    }
+                    document.getElementById('buildGoldType').appendChild(temp);
+                    document.getElementById('buildGoldType').onchange = function(e){
+                            ChangeGoldType();
+                            refreshSkills();
+                            processArtifacts(artifactCSV);
+                        }
+
+                    updateProbabilites();
+                    updateEquipments();
+                    initializeQuickRenderTemplates();
+
+                    
+                    Reload();
+                }
+                
+        async function importData(data){
+            var text;
+            if(!data){
+                text = await navigator.clipboard.readText();
+                importedStats = JSON.parse(text);
+            } else {
+                importPaste.value = "";
+                importedStats = JSON.parse(data);
+            }
+        
+
+            for (var entry in playerPassives) delete playerPassives[entry];
+            Passives.innerHTML = "<Strong>Passives</Strong>";
+            var passives = importedStats.passiveSkills;
+            Object.entries(passives).forEach(([key, value]) => {
+                var newItem = document.createElement('div');
+                newItem.textContent = key +": "+value;
+                Passives.appendChild(newItem);
+                playerPassives[key] = value;
+            });
+
+            for (var entry in playerSkills) delete playerSkills[entry];
+            Skills.innerHTML = "";
+            var skills = importedStats.skillTree;
+            Object.entries(skills).forEach(([key, value]) => {
+                var newItem = document.createElement('div');
+                newItem.textContent = key +": "+value;
+                Skills.appendChild(newItem);
+                playerSkills[key] = value;
+            });
+            document.getElementById('loadSkills').style.visibility = "visible";
+
+            for (var entry in playerArtifacts) delete playerArtifacts[entry];
+            var artifacts = importedStats.artifacts;
+            Object.entries(artifacts).forEach(([key, value]) => {
+                playerArtifacts[key] = value;
+            });
+
+            var stats = importedStats.playerStats;
+            PlayerStatistics.innerHTML = "<Strong>Player Stats</Strong>";
+            Object.entries(stats).forEach(([key, value]) => {
+                var newItem = document.createElement('div');
+                newItem.textContent = key +": "+value;
+                PlayerStatistics.appendChild(newItem);
+                playerProfileStats[key] = value;
+            });
+
+            document.getElementById('startingSp').value = playerProfileStats["Skill Points Owned"];
+            updateStartingSp(document.getElementById('startingSp'));
+
+            var equips = importedStats.equipmentSets;
+            for (var entry in playerSets) delete playerSets[entry];
+            EquipmentSets.innerHTML = "";
+            updateArtifacts();
+            Object.entries(equips).forEach(([key, value]) => {
+                var newItem = document.createElement('div');
+                newItem.textContent = value;
+                EquipmentSets.appendChild(newItem);
+                playerSets[value] = true;
+            });
+
+            // (function(){
+            // var myObject = JSON.parse('{"id":1,"gender":"male"}');
+            // var e = 'Thu Nov 26 2017 15:44:38'; document.cookie = 'myObj='+ JSON.stringify(myObject) +';expires=' + e;
+            // })()
+            // bake_cookie("import-data", "test");
+        }
+
+        function updateSkillRankingList(){
+            var rankingBox = SkillRankings;
+            rankingBox.innerHTML = "";
+            var ul = document.createDocumentFragment();
+            SPJsonArray.sort(function(a,b){
+                return parseFloat(b.Efficiency) - parseFloat(a.Efficiency);
+            });
+            var i = 0;
+            SPJsonArray.forEach((element) => {
+                if(element.Efficiency <= 1 || element.Ignore || element.Level == element.MaxLevel) return;
+                var li = getRowTemplate(element.Class).cloneNode(true);
+                i++;
+                li.onclick = ()=>{
+                    levelSkill(element, 1);
+                };
+                li.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
+                var rank = rankingBoxRankTemplate.cloneNode(true);
+                //rank.textContent = "#"+i;
+                rank.textContent = element["Co" + element.Level]+"sp";
+                var Name = rankingBoxNameTemplate.cloneNode(true);
+                Name.textContent = element.Name;
+                var value = rankingBoxValueTemplate.cloneNode(true);
+                value.textContent = Number(element.Efficiency).toFixed(4);
+                // var SPbox = rankingBoxSPTemplate.cloneNode(true);
+                // SPbox.textContent = element["Co" + element.Level]+"sp";
+                li.appendChild(rank);
+                //li.appendChild(SPbox)
+                li.appendChild(Name);
+                li.appendChild(value);
+                ul.appendChild(li);
+            });
+            SkillRankings.appendChild(ul);
+        }
+        function updateStartingSp(input){
+            startingSp = Number(input.value);
+        }
+
+        
+        function processHeroSkills(data){
+            var allTextLines = data.split(/\r\n|\n/);
+            var firstline = allTextLines[0].split(',');
+            var headings = firstline.splice(0,firstline.length);
+            for (var i = 1; i < allTextLines.length; i++ ) {
+                var tarr = {};
+                var currentLine = allTextLines[i].split(',');
+                if(typeof heroSkills[currentLine[3]] !== "undefined"){
+                    if(currentLine[4] > 1.0){
+                        if(currentLine[3] == "ManaPoolCap") {
+                            heroSkills[currentLine[3]] = heroSkills[currentLine[3]] + Number(currentLine[4]);
+                        } else {
+                        heroSkills[currentLine[3]] = heroSkills[currentLine[3]] + 1;
+                        }
+                    } else {
+                        heroSkills[currentLine[3]] = heroSkills[currentLine[3]] + Number(currentLine[4]);
+                    }
+                } else {
+                    if(currentLine[4] > 1.0){
+                        if(currentLine[3] == "ManaPoolCap") {
+                            heroSkills[currentLine[3]] = Number(currentLine[4]);
+                        } else {
+                            heroSkills[currentLine[3]] = 1;
+                        }
+                    } else {
+                        heroSkills[currentLine[3]] = Number(currentLine[4]);
+                    } 
+                }
+            }
+
+        }
+        function isSpecialEffiencySkill(skillName){
+            if(SpecialEffieciencies.includes(skillName)) return true;
+            return false;
+        }
+        var warcryHelpers = 1;
+        function hasT4plusOne(Class){
+            switch(Class){
+                case "Knight":
+                    return playerSets["Shae, the Radiant Beacon"];
+                break;
+                case "Pet":
+                    return playerSets["Ignus, the Volcanic Phoenix"];
+                break;
+                case "Warlord" : return playerSets["Ironheart, the Crackling Tiger"];
+                break;
+                case "Rogue": return playerSets["Styxsis, the Single Touch"];
+                break;
+                case "Sorcerer": return playerSets["Kor, the Whispering Wave"];
+                break;
+                case "Alchemist": return playerSets["Rygal, the Brilliant Engineer"];
+                    break;
+            }
+        }
+        
+
+        function findSlot(tree, slot){
+            for(var i = 0; i < tree.length; i++){
+                if(tree[i].Slot == slot+"") return tree[i];
+            }
+        }
+        function populateTree(id, tree){
+            tree.length = 0;
+            for(var i = 0; i < SPJsonArray.length; i++){
+                if(SPJsonArray[i].Class == id) tree.push(SPJsonArray[i]);
+            }
+        }
+        function processReductions(allReductions){
+            var allTextLines = allReductions.split(/\r\n|\n/);
+            var headings = allTextLines[0].split(',');
+
+            var headings = headings.splice(0,headings.length);
+            for (var i = 1; i < allTextLines.length; i++ ) {
+                var tarr = {};
+                var currentLine = allTextLines[i].split(',');
+                for (var j=0; j<headings.length; j++) {
+                    if(j>=1){
+                        tarr[headings[j].trim()] = eval(currentLine[j].trim());
+                    }else{
+                        tarr[headings[j].trim()] = currentLine[j].trim();
+                    }
+                }
+                SPreductions[tarr.Source] = tarr;
+            }
+        }
+        function processGoldReductions(allReductions){
+            var allTextLines = allReductions.split(/\r\n|\n/);
+            var headings = allTextLines[0].split(',');
+
+            var headings = headings.splice(0,headings.length);
+            for (var i = 1; i < allTextLines.length; i++ ) {
+                var tarr = {};
+                var currentLine = allTextLines[i].split(',');
+                for (var j=0; j<headings.length; j++) {
+                    if(j>=1){
+                        tarr[headings[j].trim()] = eval(currentLine[j].trim());
+                    }else{
+                        tarr[headings[j].trim()] = currentLine[j].trim();
+                    }
+                }
+                Goldreductions[tarr.Types] = tarr;
+            }
+        }
+        
+        var test;
+
+        function ChangeDamageType(){
+            SelectedBuildDamage = buildDmgType.value;
+        }
+        function ChangeGoldType(){
+            SelectedGoldOption = buildGoldType.value;
+        }
+        function Reload(){
+            $('#buildDmgType').val(SelectedBuildDamage);
+            $('#buildGoldType').val(SelectedGoldOption);
+            
+            createTrees();
+
+            updateTotalSpSpent();
+            updateSkillRankingList();
+        }
+        function refreshSkills(){
+            SPJsonArray.forEach((element)=>{
+                levelSkill(element, 0);
+            });
+        }
+        function resetTree(){
+            SPJsonArray.forEach(element => {
+                element.Level = 0;
+            })
+            Reload();
+        }
+        function loadSkillsFrom(thisList){
+            resetTree();
+            Object.entries(thisList).forEach(([key, value]) => {
+                for(var i = 0; i < SPJsonArray.length; i++){
+                    if(SPJsonArray[i].Name == key){
+                        levelSkill(SPJsonArray[i], value);
+                        break;
+                    }
+                }
+            });  
+        }
+        function updateProbabilites(){
+            var probsContainer = Probabilities;
+            probsContainer.innerHTML = "";
+            function getNewProb(labelText, inputText, valToUpdate, max){
+                var newProb = document.createElement('div');
+                newProb.classList = "row no-gutters";
+                var newLabel = document.createElement('div');
+                newLabel.classList = "col-md-12 col-lg-auto alignLabelVert";
+                var label = document.createElement('label');
+                label.textContent = labelText;
+                newLabel.appendChild(label);
+                newProb.appendChild(newLabel);
+                var newInput = document.createElement('div');
+                newInput.classList = "col";
+                var input = document.createElement('input');
+                input.value = inputText;
+                input.type = "number";
+                input.max = "100";
+                if(max != null) input.max = max;
+                input.min = "0";
+                input.onchange = function(){
+                    playerProbabilities[valToUpdate] = Number(input.value);
+                    refreshSkills();
+                }
+                newInput.appendChild(input);
+                newProb.appendChild(newInput);
+                return newProb;
+            }
+            probsContainer.appendChild(getNewProb("Gold Efficiency:", ".79", "goldEff", 1));
+            probsContainer.appendChild(getNewProb("Time Spent:", "30", "timeSpentOnBoss", 200));
+            probsContainer.appendChild(getNewProb("LS %:", "2.0", "lightningStrikePercent"));
+            probsContainer.appendChild(getNewProb("LS Attempts/s:", "200.0", "lightningStrikeAttempts", 500));
+            probsContainer.appendChild(getNewProb("Crit%:", "100", "crit"));
+            probsContainer.appendChild(getNewProb("Deadly%:", "100", "deadly"));
+            probsContainer.appendChild(getNewProb("Spawn%:", "100", "multispawn"));
+            // Object.entries(playerProbabilities).forEach(([key, value]) => {
+            //     var newItem = document.createElement('div');
+            //     newItem.textContent = key +": "+ value;
+            //     probsContainer.appendChild(newItem);
+            // });         
+        };
+        function updateEquipments(){
+            function getNewEquip(labelText, valToUpdate){
+                var newProb = document.createElement('div');
+                newProb.classList = "row no-gutters";
+                var newLabel = document.createElement('div');
+                newLabel.classList = "col-12 alignLabelVert";
+                var label = document.createElement('label');
+                label.textContent = labelText;
+                label.style.width = "100%";
+                newLabel.appendChild(label);
+                newProb.appendChild(newLabel);
+                var newInput = document.createElement('div');
+                newInput.classList = "col";
+                var input = document.createElement('select');
+                var option1 = document.createElement('option');
+                option1.value = true;
+                option1.textContent = "Obtained";
+                var option2 = document.createElement('option');
+                option2.value = false;
+                option2.textContent = "Not Owned";
+                input.style.marginBottom = "2px";
+                input.appendChild(option1);
+                input.appendChild(option2);
+                input.onchange = function(){
+                    function checkBool(string){
+                        switch(string) {case "false": case "no": case "0": case "": return false; default: return true;};
+                    }
+                    var boole = checkBool(this.value.toLowerCase());
+                    playerSets[valToUpdate] = boole;
+                }
+                newInput.appendChild(input);
+                newProb.appendChild(newInput);
+                return newProb;
+            }
+            var probsContainer = EquipmentSets;
+            Object.entries(playerSets).forEach(([key, value]) => {
+                probsContainer.appendChild(getNewEquip(key, key));
+            });         
+        };
+        function updateArtifacts(){
+            function getNewArtifact(labelText){
+                var newProb = document.createElement('div');
+                newProb.classList = "row no-gutters";
+                var newLabel = document.createElement('div');
+                newLabel.classList = "col-12 alignLabelVert";
+
+                var label = document.createElement('label');
+                label.textContent = labelText;
+                label.style.width = "100%";
+                newLabel.appendChild(label);
+                newProb.appendChild(newLabel);
+                var newInput = document.createElement('div');
+                newInput.classList = "col";
+                var input = document.createElement('select');
+                var option1 = document.createElement('option');
+                option1.value = true;
+                option1.textContent = "Obtained";
+                var option2 = document.createElement('option');
+                option2.value = false;
+                option2.textContent = "Not Owned";
+                input.style.marginBottom = "2px";
+                input.appendChild(option1);
+                input.appendChild(option2);
+                input.onchange = function(){
+                    function checkBool(string){
+                        switch(string) {case "false": case "no": case "0": case "": return false; default: return true;};
+                    }
+                    var boole = checkBool(this.value.toLowerCase());
+                    playerSets[labelText] = boole;
+                }
+                newInput.appendChild(input);
+                newProb.appendChild(newInput);
+                return newProb;
+            }
+            var probsContainer = EquipmentSets;
+            probsContainer.innerHTML = "";
+            if(typeof playerArtifacts["The Master's Sword"] !== undefined){
+                probsContainer.appendChild(getNewArtifact("The Master's Sword"));
+            }      
+        };
+    </script>
+       <!-- Optional JavaScript -->
+       
+       <script src="scripties/artifactOptimizerScript.js"></script>
+       <script src="scripties/generalScripts.js"></script>
+       <script src="scripties/bignumber.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
+</html>

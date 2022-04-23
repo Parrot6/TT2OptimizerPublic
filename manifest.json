@@ -1,0 +1,14 @@
+{
+    "background_color": "blue",
+    "description": "Tap Tap Tap",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "128" : "tt2icon128.jpg"
+      }
+    ],
+    "name": "TT2 Optimizer - Parrot6",
+    "short_name": "TT2 Opti",
+    "start_url": "./index.html"
+  }

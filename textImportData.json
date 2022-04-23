@@ -1,0 +1,711 @@
+{
+    "playerStats": {
+        "Max Prestige Stage": "117440",
+        "Artifacts Collected": "98",
+        "Crafting Power": "38",
+        "Total Pet Levels": "20694",
+        "Skill Points Owned": "4028",
+        "Hero Weapon Upgrades": "4694",
+        "Hero Scroll Upgrades": "2736",
+        "Tournaments Joined": "459",
+        "Undisputed Wins": "226",
+        "Tournament Points": "89220",
+        "Lifetime Relics": "5.039E+182"
+    },
+    "raidStats": {
+        "Raid Level": "278",
+        "Raid Damage": "378",
+        "Total Raid Experience": "171500",
+        "Total Raid Attacks": "4042",
+        "Total Raid Card Levels": "579",
+        "Raid Cards Owned": "29",
+        "Lifetime Clan Morale": "41014"
+    },
+    "artifacts": {
+        "Book of Shadows": {
+            "enchanted": "True",
+            "level": "1.240E+52"
+        },
+        "Charged Card": {
+            "enchanted": "True",
+            "level": "2.100E+64"
+        },
+        "Stone of the Valrunes": {
+            "enchanted": "True",
+            "level": "2.100E+64"
+        },
+        "Chest of Contentment": {
+            "enchanted": "True",
+            "level": "9.000E+62"
+        },
+        "Heroic Shield": {
+            "enchanted": "True",
+            "level": "2.100E+64"
+        },
+        "Book of Prophecy": {
+            "enchanted": "True",
+            "level": "2.080E+56"
+        },
+        "Khrysos Bowl": {
+            "enchanted": "False",
+            "level": "2.000E+64"
+        },
+        "Zakynthos Coin": {
+            "enchanted": "False",
+            "level": "1.600E+63"
+        },
+        "Great Fay Medallion": {
+            "enchanted": "True",
+            "level": "1.400E+63"
+        },
+        "Neko Sculpture": {
+            "enchanted": "True",
+            "level": "2.000E+64"
+        },
+        "Coins of Ebizu": {
+            "enchanted": "True",
+            "level": "1.600E+63"
+        },
+        "The Bronzed Compass": {
+            "enchanted": "False",
+            "level": "2.000E+64"
+        },
+        "Evergrowing Stack": {
+            "enchanted": "True",
+            "level": "2.000E+56"
+        },
+        "Flute of the Soloist": {
+            "enchanted": "True",
+            "level": "2.140E+56"
+        },
+        "Heavenly Sword": {
+            "enchanted": "True",
+            "level": "1.881E+56"
+        },
+        "Divine Retribution": {
+            "enchanted": "True",
+            "level": "9.390E+59"
+        },
+        "Drunken Hammer": {
+            "enchanted": "True",
+            "level": "1.000E+66"
+        },
+        "Samosek Sword": {
+            "enchanted": "False",
+            "level": "7.000E+58"
+        },
+        "The Retaliator": {
+            "enchanted": "True",
+            "level": "4.270E+66"
+        },
+        "Stryfe's Peace": {
+            "enchanted": "False",
+            "level": "8.000E+59"
+        },
+        "Hero's Blade": {
+            "enchanted": "False",
+            "level": "4.280E+66"
+        },
+        "The Sword of Storms": {
+            "enchanted": "True",
+            "level": "4.000E+66"
+        },
+        "Furies Bow": {
+            "enchanted": "True",
+            "level": "1.000E+66"
+        },
+        "Charm of the Ancient": {
+            "enchanted": "True",
+            "level": "4.000E+66"
+        },
+        "Tiny Titan Tree": {
+            "enchanted": "False",
+            "level": "4.250E+66"
+        },
+        "Helm of Hermes": {
+            "enchanted": "False",
+            "level": "5.000E+65"
+        },
+        "Fruit of Eden": {
+            "enchanted": "False",
+            "level": "8.000E+58"
+        },
+        "Influential Elixir": {
+            "enchanted": "False",
+            "level": "3.300E+66"
+        },
+        "Shimmering Oil": {
+            "enchanted": "False",
+            "level": "3.000E+65"
+        },
+        "O'Ryan's Charm": {
+            "enchanted": "False",
+            "level": "1.780E+64"
+        },
+        "Heart of Storms": {
+            "enchanted": "False",
+            "level": "2.120E+56"
+        },
+        "Apollo Orb": {
+            "enchanted": "False",
+            "level": "1.650E+56"
+        },
+        "Sticky Fruit": {
+            "enchanted": "False",
+            "level": "1.650E+56"
+        },
+        "Hades Orb": {
+            "enchanted": "False",
+            "level": "1.560E+56"
+        },
+        "Earrings of Portara": {
+            "enchanted": "True",
+            "level": "3.500E+66"
+        },
+        "Avian Feather": {
+            "enchanted": "True",
+            "level": "3.300E+66"
+        },
+        "Corrupted Rune Heart": {
+            "enchanted": "False",
+            "level": "2.000E+66"
+        },
+        "Durendal Sword": {
+            "enchanted": "True",
+            "level": "4.000E+59"
+        },
+        "Helheim Skull": {
+            "enchanted": "True",
+            "level": "7.900E+59"
+        },
+        "Oath's Burden": {
+            "enchanted": "False",
+            "level": "7.000E+51"
+        },
+        "Crown of the Constellation": {
+            "enchanted": "True",
+            "level": "1.600E+56"
+        },
+        "Titania's Sceptre": {
+            "enchanted": "True",
+            "level": "1.100E+56"
+        },
+        "Fagin's Grip": {
+            "enchanted": "True",
+            "level": "1.100E+56"
+        },
+        "Ring of Calisto": {
+            "enchanted": "True",
+            "level": "1.700E+56"
+        },
+        "Blade of Damocles": {
+            "enchanted": "False",
+            "level": "8.700E+59"
+        },
+        "Helmet of Madness": {
+            "enchanted": "False",
+            "level": "8.800E+59"
+        },
+        "Titanium Plating": {
+            "enchanted": "False",
+            "level": "8.800E+59"
+        },
+        "Moonlight Bracelet": {
+            "enchanted": "False",
+            "level": "8.000E+59"
+        },
+        "Amethyst Staff": {
+            "enchanted": "False",
+            "level": "8.000E+59"
+        },
+        "Sword of the Royals": {
+            "enchanted": "True",
+            "level": "1.500E+56"
+        },
+        "Spearit's Vigil": {
+            "enchanted": "True",
+            "level": "1.400E+56"
+        },
+        "The Cobalt Plate": {
+            "enchanted": "True",
+            "level": "1.500E+56"
+        },
+        "Sigils of Judgement": {
+            "enchanted": "True",
+            "level": "1.500E+56"
+        },
+        "Foliage of the Keeper": {
+            "enchanted": "True",
+            "level": "1.500E+56"
+        },
+        "Invader's Gjallarhorn": {
+            "enchanted": "True",
+            "level": "1.800E+64"
+        },
+        "Titan's Mask": {
+            "enchanted": "False",
+            "level": "2.000E+65"
+        },
+        "Royal Toxin": {
+            "enchanted": "False",
+            "level": "3.000E+66"
+        },
+        "Laborer's Pendant": {
+            "enchanted": "False",
+            "level": "3.000E+66"
+        },
+        "Bringer of Ragnarok": {
+            "enchanted": "False",
+            "level": "3.000E+64"
+        },
+        "Parchment of Foresight": {
+            "enchanted": "False",
+            "level": "3.000E+66"
+        },
+        "Elixir of Eden": {
+            "enchanted": "True",
+            "level": "2.000E+65"
+        },
+        "Hourglass of the Impatient": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Phantom Timepiece": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Forbidden Scroll": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Ring of Fealty": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Glacial Axe": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Aegis": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Swamp Gauntlet": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Infinity Pendulum": {
+            "enchanted": "False",
+            "level": "2.000E+1"
+        },
+        "Glove of Kuma": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "Titan Spear": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Oak Staff": {
+            "enchanted": "False",
+            "level": "3.000E+1"
+        },
+        "The Arcana Cloak": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Hunter's Ointment": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Ambrosia Elixir": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Mystic Staff": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Mystical Beans of Senzu": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Egg of Fortune": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Divine Chalice": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Invader's Shield": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Axe of Muerte": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Essence of the Kitsune": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Boots of Hermes": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Unbound Gauntlet": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Oberon Pendant": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Lucky Foot of Al-mi'raj": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Lost King's Mask": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Staff of Radiance": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Morgelai Sword": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Ringing Stone": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Quill of Scrolls": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Old King's Stamp": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "The Master's Sword": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "The Magnifier": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "The Treasure of Fergus": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "The White Dwarf": {
+            "enchanted": "False",
+            "level": "5.000E+1"
+        },
+        "Aram Spear": {
+            "enchanted": "False",
+            "level": "4.000E+1"
+        },
+        "Ward of the Darkness": {
+            "enchanted": "False",
+            "level": "6.000E+1"
+        }
+    },
+    "splashStats": {
+        "Splash Damage": "9.103E+75",
+        "Base Max Splash Count": "15",
+        "All Splash Skip": "1.12",
+        "Heavenly Strike Splash Count": "21",
+        "Lightning Burst Splash Count": "15",
+        "Clan Ship Splash Count": "39",
+        "Dagger Splash Count": "16",
+        "Heavenly Strike Splash Skip": "329.3",
+        "Pet Splash Skip": "212.8",
+        "Clan Ship Splash Skip": "374.1",
+        "Shadow Clone Splash Skip": "329.3",
+        "Dagger Splash Skip": "263.2"
+    },
+    "raidCards": {
+        "Moon Beam": {
+            "level": 25,
+            "cards": 101
+        },
+        "Fragmentize": {
+            "level": 25,
+            "cards": 124
+        },
+        "Skull Bash": {
+            "level": 25,
+            "cards": 37
+        },
+        "Razor Wind": {
+            "level": 24,
+            "cards": 66
+        },
+        "Whip of Lightning": {
+            "level": 8,
+            "cards": 1287
+        },
+        "Clanship Barrage": {
+            "level": 29,
+            "cards": 72
+        },
+        "Purifying Blast": {
+            "level": 29,
+            "cards": 151
+        },
+        "Psychic Chain": {
+            "level": 27,
+            "cards": 72
+        },
+        "Flak Shot": {
+            "level": 24,
+            "cards": 137
+        },
+        "Cosmic Haymaker": {
+            "level": 10,
+            "cards": 697
+        },
+        "Blazing Inferno": {
+            "level": 12,
+            "cards": 1097
+        },
+        "Acid Drench": {
+            "level": 10,
+            "cards": 1082
+        },
+        "Decaying Strike": {
+            "level": 10,
+            "cards": 1001
+        },
+        "Fusion Bomb": {
+            "level": 14,
+            "cards": 1330
+        },
+        "Grim Shadow": {
+            "level": 21,
+            "cards": 189
+        },
+        "Thriving Plague": {
+            "level": 22,
+            "cards": 36
+        },
+        "Radioactivity": {
+            "level": 16,
+            "cards": 489
+        },
+        "Ravenous Swarm": {
+            "level": 19,
+            "cards": 329
+        },
+        "Maelstrom": {
+            "level": 18,
+            "cards": 31
+        },
+        "Crushing Instinct": {
+            "level": 23,
+            "cards": 89
+        },
+        "Insanity Void": {
+            "level": 5,
+            "cards": 375
+        },
+        "Rancid Gas": {
+            "level": 23,
+            "cards": 57
+        },
+        "Inspiring Force": {
+            "level": 17,
+            "cards": 444
+        },
+        "Soul Fire": {
+            "level": 21,
+            "cards": 643
+        },
+        "Victory March": {
+            "level": 21,
+            "cards": 414
+        },
+        "Prismatic Rift": {
+            "level": 17,
+            "cards": 608
+        },
+        "Ancestral Favor": {
+            "level": 28,
+            "cards": 161
+        },
+        "Grasping Vines": {
+            "level": 25,
+            "cards": 0
+        },
+        "Totem of Power": {
+            "level": 31,
+            "cards": 125
+        }
+    },
+    "equipmentSets": [
+        "Ruthless Necromancer",
+        "Angelic Guardian",
+        "Treasure Hunter",
+        "Dark Predator",
+        "Fatal Samurai",
+        "Ancient Warrior",
+        "Anniversary Gold",
+        "Phantom Presence",
+        "Cybernetic Enhancements",
+        "Dragon Slayer",
+        "Corrupt Emerald Knight",
+        "Defender of the Egg",
+        "The Heartbreaker",
+        "Snow Master",
+        "Midnight Raven",
+        "The Rockstar",
+        "Surf Strike",
+        "Viking King",
+        "The Sly Wolf",
+        "Amazon Princess",
+        "Heartly Queen",
+        "Captain Titan",
+        "Chained Clockwork",
+        "Solar Paragon",
+        "Frost Warden",
+        "Toxic Slayer",
+        "Defiant Spellslinger",
+        "Titan Attacker",
+        "Scarecrow Jack",
+        "Sled Season",
+        "Shadow Disciple",
+        "Anniversary Platinum",
+        "Mechanized Sword",
+        "Chills and Thrills",
+        "Lunar Festival",
+        "Eternal Monk",
+        "Thundering Deity",
+        "Blessed Bishop",
+        "Noble Fencer",
+        "The Fallen Angel",
+        "Dedicated Fan",
+        "Bone Mender",
+        "Celestial Enchanter",
+        "Combo Breaker",
+        "Grim Reaper",
+        "Jack Frost",
+        "Anniversary Diamond",
+        "Nimble Hunter",
+        "Sweets and Treats",
+        "Hidden Viper",
+        "Heir of Shadows",
+        "Ignus, the Volcanic Phoenix",
+        "Ironheart, the Crackling Tiger",
+        "Kor, the Whispering Wave",
+        "Styxsis, the Single Touch",
+        "Digital Idol",
+        "Azure Knight",
+        "Reckless Firepower",
+        "Grill Master",
+        "Golden Monarch",
+        "Beast Rancher",
+        "Ancient Vampire",
+        "Black Knight",
+        "Anniversary Jade",
+        "Tiny Titan",
+        "Spartan Champion",
+        "Immaculate Arbiter",
+        "Love Struck",
+        "Savage Pyromancer",
+        "Brave Minstrel",
+        "Forsaken Battlemage",
+        "Inspiring Captain",
+        "Rock Queen",
+        "Twilight Templar"
+    ],
+    "passiveSkills": {
+        "Intimidating Presence": 166,
+        "Power Surge": 59,
+        "Anti-Titan Cannon": 203,
+        "Mystical Impact": 163,
+        "Arcane Bargain": 131,
+        "Silent March": 275,
+        "Cloak And Dagger": 104
+    },
+    "petLevels": {
+        "Nova": 977,
+        "Toto": 927,
+        "Cerberus": 914,
+        "Mousy": 871,
+        "Harker": 935,
+        "Bubbles": 1364,
+        "Demos": 1317,
+        "Tempest": 867,
+        "Basky": 866,
+        "Scraps": 886,
+        "Zero": 1008,
+        "Polly": 987,
+        "Hamy": 922,
+        "Phobos": 865,
+        "Fluffers": 2724,
+        "Kit": 912,
+        "Soot": 219,
+        "Klack": 196,
+        "Cooper": 281,
+        "Jaws": 202,
+        "Xander": 206,
+        "Griff": 244,
+        "Basil": 226,
+        "Bash": 295,
+        "Violet": 191,
+        "Annabelle": 249,
+        "Effie": 299,
+        "Percy": 284,
+        "Cosmos": 237,
+        "Taffy": 223
+    },
+    "skillTree": {
+        "Knight's Valor": 2,
+        "Chivalric Order": 1,
+        "Pet Evolution": 0,
+        "Heart of Midas": 17,
+        "Cleaving Strike": 19,
+        "Summon Inferno": 0,
+        "Lightning Burst": 0,
+        "Barbaric Fury": 0,
+        "Volcanic Supremacy": 0,
+        "Flash Zip": 0,
+        "Master Commander": 17,
+        "Spoils of War": 1,
+        "Heroic Might": 17,
+        "Aerial Assault": 20,
+        "Tactical Insight": 17,
+        "Searing Light": 18,
+        "Coordinated Offensive": 20,
+        "Astral Awakening": 15,
+        "Command Supremacy": 15,
+        "Anchoring Shot": 15,
+        "Limit Break": 2,
+        "Midas Ultimate": 11,
+        "Angelic Radiance": 1,
+        "Phantom Vengeance": 1,
+        "Fairy Charm": 8,
+        "Mana Siphon": 1,
+        "Eternal Darkness": 1,
+        "Manni Mana": 0,
+        "Lightning Strike": 11,
+        "Dimensional Shift": 6,
+        "Master Thief": 15,
+        "Ambush": 1,
+        "Assassinate": 9,
+        "Summon Dagger": 1,
+        "Stroke Of Luck": 1,
+        "Dagger Storm": 5,
+        "Cloaking": 1,
+        "Forbidden Contract": 3,
+        "Poison Edge": 18,
+        "Deadly Focus": 15,
+        "Divine Supremacy": 3,
+        "Phantom Supremacy": 0
+    }
+}
