@@ -543,7 +543,7 @@ var nameConversions = {
     "High Voltage": "Voltaic Sails",
     "Puppet Master": "Nightmare Puppeteer",
     "Stroke Of Luck": "Stroke of Luck",
-    "Heart Of Gold": "Heart of Midas"
+    "Heart Of Gold": "Heart of Gold"
 }
 var artifactImageUrls = {
     "Book of Shadows": "https://vignette.wikia.nocookie.net/tap-titans-2/images/1/18/Book_of_Shadows.png/revision/latest?cb=20171024224110",
