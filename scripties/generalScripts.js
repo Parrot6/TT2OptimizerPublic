@@ -12,6 +12,9 @@ var UserList = Backbone.Router.extend({
         document.getElementById('sp').classList.add("active");
         document.getElementById('spOptimizer').style.display = "block";
         document.getElementById('spOptimizer').classList.add("active");
+        for (let element of document.getElementsByClassName("buildTypeSection")){
+            element.style.display="flex";
+        }
         for (let element of document.getElementsByClassName("spTopChoices")){
             element.style.display="block";
          }
@@ -24,6 +27,9 @@ var UserList = Backbone.Router.extend({
         document.getElementById('artifact').classList.add("active");
         document.getElementById('artifactOptimizer').style.display = "block";
         document.getElementById('artifactOptimizer').classList.add("active");
+        for (let element of document.getElementsByClassName("buildTypeSection")){
+            element.style.display="flex";
+        }
         for (let element of document.getElementsByClassName("artifactTopChoices")){
             element.style.display="block";
          }
@@ -34,6 +40,9 @@ var UserList = Backbone.Router.extend({
     },
     other: function(){
         resetButtons();
+        for (let element of document.getElementsByClassName("buildTypeSection")){
+            element.style.display="none";
+        }
         document.getElementById('other').classList.add("active");
         document.getElementById('otherProjects').style.display = "block";
         document.getElementById('otherProjects').classList.add("active");

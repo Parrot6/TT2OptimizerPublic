@@ -24,14 +24,14 @@
         <div class="sheetNavigation row no-gutters">
             <div id="sp" class="sheetNavigationButton col no-gutters text-center active"><a href="#sp">SP Optimizer</a></div>
             <div id="artifact" class="sheetNavigationButton col no-gutters text-center"><a href="#artifact">Artifact Optimizer</a></div>
-            <div id="other" class="sheetNavigationButton col-auto no-gutters text-center px-1"><a href="#other">Other Projects</a></div>
-            <div class="col no-gutters text-center"><button style="height: calc(100% - 6px); white-space: nowrap;" class="controllerButtonImport pr-1" onclick="userHardReload()">v5.16.1 (Click To Clear Cache+Reload)</button></div>
+            <div id="other" class="sheetNavigationButton col-auto no-gutters text-center px-1"><a href="#other">&nbsp&nbspParrot6&nbsp&nbsp</a></div>
+            <div class="col no-gutters text-center"><button style="height: calc(100% - 6px); white-space: nowrap;" class="controllerButtonImport pr-1" onclick="userHardReload()">v5.22.0 (Click To Clear Cache+Reload)</button></div>
         </div>
         <div class="row buildTypeSection no-gutters">
             <div class="col-md-3 col-sm-12">
                 <div class="row no-gutters">
                     <div class="col-auto alignLabelVert">
-                        <label for="dmgchoices">Dmg Type:&nbsp</label>
+                        <label for="buildDmgType">Dmg Type:&nbsp</label>
                     </div>
                     <div class="col">
                         <select name="dmgchoices" id="buildDmgType">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row no-gutters pt-1">
                     <div class="col-auto alignLabelVert">
-                        <label for="cars">Gold Type:&nbsp</label>
+                        <label for="buildGoldType">Gold Type:&nbsp</label>
                     </div>
                     <div class="col">
                         <select name="goldchoices" id="buildGoldType">
@@ -73,7 +73,7 @@
             <div class="col artifactTopChoices">
                 <div class="row no-gutters">
                     <div class="col-3 alignLabelVert">
-                        <label for="cars">Hero Type:&nbsp</label>
+                        <label for="artifactHeroType">Hero Type:&nbsp</label>
                     </div>
                     <div class="col">
                         <select onchange="processArtifacts(artifactCSV)" id="artifactHeroType">
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row no-gutters">
                     <div class="col-3 alignLabelVert">
-                        <label for="cars">Ground/Flying:&nbsp</label>
+                        <label for="artifactFlyingGroundType">Ground/Flying:&nbsp</label>
                     </div>
                     <div class="col">
                         <select onchange="processArtifacts(artifactCSV)" id="artifactFlyingGroundType">
@@ -97,7 +97,7 @@
                 </div>
                 <div class="row no-gutters">
                     <div class="col-3 alignLabelVert">
-                        <label for="cars">Artifact View:</label>
+                        <label for="artifactViewChoice">Artifact View:</label>
                     </div>
                     <div class="col">
                         <select onchange="artifactViewToggle()" id="artifactViewChoice">
@@ -225,24 +225,19 @@
                 </div>
             </div>
         </div>
-        <div class="row no-gutters">
-            <div id="artifactHolder" class="col-md col-sm-12">
+            <div class="row no-gutters">
+                <div id="artifactHolder" class="col-md col-sm-12">
 
-            </div>
-            <div id="aritactSuggestions" class="col-md col-sm-12 px-1">
+                </div>
+                <div id="aritactSuggestions" class="col-md col-sm-12 px-1">
 
+                </div>
             </div>
-        </div>    
         </div>
-        <div class="sheet mx-2 my-1" id="otherProjects">
-            <div class="row no-gutters text-center">
-                <h4>Check out my other projects!</h4>
+        <div class="sheet" id="otherProjects">
+            <div class="row no-gutters text-center" style="height: calc(100% - 40px);">
+                <iframe class="w-100 h-100" src="https://www.parrot6.com"></iframe>
             </div>
-            <div class="row no-gutters"><b>Quenched:</b>&nbsp;<a href="https://www.imquenched.com">Quenched Site</a></div>
-            <div class="row no-gutters pb-1">Find breweries in the United States! Favorite breweries for later, add new breweries, post photos from your favorite breweries.</div>
-            <div class="row no-gutters"><b>Web App:</b>&nbsp;<a href="https://www.imquenched.com/app">Quenched App</a></div>
-            <div class="row no-gutters">Designed for mobile use but also great for use in your browser, or download from android play store.</div>
-            <div class="row no-gutters mt-4"><b>Acrylic Paintings:&nbsp;</b> Once I get some finished...</div>
         </div>
     </body>
     <script>
@@ -371,6 +366,7 @@
                         //Convert their CSV bonus type to a item of the Types list
                         console.log(tarr, typeConversions[tarr['BonusTypeA']]);
                         tarr['BonusTypeA'] = typeConversions[tarr['BonusTypeA']];
+                        tarr['BonusTypeB'] = typeConversions[tarr['BonusTypeB']];
                         //Ignore set off by default
                         tarr['Ignore'] = false;
                         //Add this finished Skill Row to the SPJsonArray

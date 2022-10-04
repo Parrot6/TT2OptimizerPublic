@@ -142,12 +142,12 @@ function createTree(id, treeArray){
    //console.log(id);
     document.getElementById(id).innerHTML = "";
     document.getElementById(id).append(thisTree);
-    if(id == "rogueTree"){
+    if(id === "alchemistTree"){
         var parrotInfo = document.createElement('div');
         parrotInfo.className = "parrotInfo";
         parrotInfo.style.display = "inline-block"
         parrotInfo.innerHTML = '<a target="_blank" style="font-size: 1.2rem; line-height: 2rem;" href="https://youtu.be/y10N-2e55p4">Video Tutorial Link</a></br>Discord: Parrot6#7225</br>Reddit: u/Killerparrot6</br>Venmo: Parrot6'
-        document.getElementById('warlordTree').append(parrotInfo);
+        document.getElementById('alchemistTree').append(parrotInfo);
     }
    //console.log(id, treeArray)
     calculateTreeTotal(treeArray, id);

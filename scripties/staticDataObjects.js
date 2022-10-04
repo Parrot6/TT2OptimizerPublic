@@ -1,7 +1,9 @@
 const BuildDamageOptions = Object.freeze({GoldGun: "GoldGun", Hero: "Hero", Tap: "Tap", Pet: "Pet", SC: "SC", HS: "HS", Ship: "Ship", Dagger: "Dagger"});
 const BuildGoldOptions = Object.freeze({all: "All", phom: "Boss", fairy: "Fairy", chesterson: "Chesterson"});
-const SpecialEffieciencies = Object.freeze(["Sprouting Salts", "Midas Overflow", "Cleaving Strike", "Volcanic Eruption", "Tactical Insight", "Searing Light", "Astral Awakening", "Command Supremacy",
-                                            "Warcry", "Lightning Strike", "Burning Passion", "Phantom Vengeance", "Divine Wrath", "Phantom Control", "Stroke of Luck", "Deadly Focus", "Barbaric Fury", "Mark of Death", "Voltaic Sails"]);
+const SpecialEffieciencies = Object.freeze(["Eventide Afterglow", "Galvanized Mast", "Loaded Dice", "Sprouting Salts", "Midas Overflow", "Cleaving Strike", "Volcanic Eruption",
+                                            "Tactical Insight", "Searing Light", "Astral Awakening", "Command Supremacy",
+                                            "Warcry", "Lightning Strike", "Burning Passion", "Phantom Vengeance", "Divine Wrath","Auric Shot",
+                                            "Phantom Control", "Stroke of Luck", "Deadly Focus", "Barbaric Fury", "Mark of Death", "Voltaic Sails","Master Thief","Ember Arts"]);
 const Gold = Object.freeze({UnskilledGold: "UnskilledGold", pHoM: "pHoM", Rogue: "Rogue", Chesterson: "Chesterson", HoM: "HoM", All: "All", ChestersonChance: "ChestersonChance", Fairy: "Fairy", Boss: "Boss", MultiSpawn: "MultiSpawn", Stealth: "Stealth", Inactive:"Inactive"});
 const Types = Object.freeze({cannonDamage: "xCannonDamage", twilight: "xTwilight", alchemist: "xAlchemist", goldGun: "xGoldGun", ranged: "xRanged", mage: "xMage", melee: "xMelee", flying: "xFlying", ground: "xGround", chivOrder: "xChivOrder", summoner: "xSummoner", tap:"xTap/FS", hero:"xHero/WC", companion: "xCompanion", all:"xAll", ds:"xDS", sad:"xSAD", crit:"xCrit", critMult:"+Crit%", pet:"xPet", sc:"xSC", dagger: "xDagger", 
 hs:"xHS", ship:"xSHIP", Gold, rogueDS: "t4RogueDS", dimshift: "xDimShift", utility: "xUtility", manaUtil: "xUtilityPlus", hos: "xHos", appollo: "xAppollo", calisto: "xCalisto", helmet: "xHelmet", exotic: "xExotic", warlord: "xWarlord", knight: "xKnight", sorcerer: "xSorc"
@@ -480,7 +482,7 @@ var typeConversions = {
     CloakedSkipChance: Types.utility,
     CritBoostSkillAmount: Types.ds,
     CritBoostSkillStacksBonus: Types.ds,
-    CritMaxDamage: Types.crit,
+    CritDamage: Types.crit,
     DeadlyDamageCompanion: Types.ds,
     FairySpawnChance: Types.utility,
     ForbiddenContractMaxDamage: Types.all,
@@ -493,6 +495,7 @@ var typeConversions = {
     HelperQTEDamage: Types.hero,
     InspiredHelperDamage: Types.hero,
     InspiredHelperWeaken: Types.hero,
+    JackpotGold: Types.Gold.All,
     LightningStrikeDamage: Types.all,
     ManaMonsterAmount: Types.manaUtil,
     ManaPoolCap: Types.manaUtil,
@@ -519,6 +522,7 @@ var typeConversions = {
     UnskilledGold: Types.Gold.UnskilledGold,
     SpecialTitanSpawnChance: Types.manaUtil,
     HandOfMidasSkillStacksBonus: Types.Gold.HoM,
+    TwilightFairySkillStacksBonus: Types.twilight,
     RoyalContractMaxGold: Types.Gold.All,
     AlchemistBonusBoost: Types.alchemist,
     MagnumOpusDamage: Types.goldGun,
@@ -527,9 +531,12 @@ var typeConversions = {
     ShadowCloneSkillSpecialDamage: Types.sc,
     StreamOfBladesSkillAmount: Types.dagger,
     CannonDamage: Types.goldGun,
-    DualPetAmount: Types.pet,
     KratosMonsterBonusAmount: Types.all,
-    ManaTapRegenAmount: Types.manaUtil
+    ManaTapRegenAmount: Types.manaUtil,
+    CritBoostSkillCritDamage: Types.crit,
+    CompanionDamage: Types.companion,
+    ThunderVolleySkillStacksBonus: Types.ship,
+    AllProbabilityBoostDuringHayst: Types.Gold.All
 }
 var nameConversions = {
     'Inspired Shot': "Searing Light",
@@ -650,5 +657,5 @@ var artifactImageUrls = {
     "Twin Bracers": "https://i.imgur.com/jsAgcOf.png",
     "Golden Scope": "https://i.imgur.com/LIYxCds.png"
 };
-const activeSpCsv = "../tt2/assets/SkillTreeInfo4-23-22.csv";
-const activeArtifactCsv = "../tt2/assets/ArtifactInfo4-23-22.csv";
+const activeSpCsv = "../tt2/assets/SkillTreeInfo10-4-22.csv";
+const activeArtifactCsv = "../tt2/assets/ArtifactInfo10-4-22.csv";

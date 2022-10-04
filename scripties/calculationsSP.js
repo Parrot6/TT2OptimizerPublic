@@ -7,7 +7,7 @@ return "B"+(skillRow.Level+levelIncrement);
 function costCol(skillRow, levelIncrement){
     return "Co"+(skillRow.Level+levelIncrement);
 }
-function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplusplus, cost, reduction, bonustype){
+function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplusplus, cost, reductionAmtA, reductionAmtB){
     const homRatio = Goldreductions[SelectedGoldOption][Gold.HoM];
     function getEffForMulticastSkill(){
         var costSoFar = 0;
@@ -23,72 +23,71 @@ function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplu
         var levelToCalc;
         var effectLvl;
         var effectiveLvl = skillRow.Level;
-        if(hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) effectiveLvl++;
+        if(hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) === 4) effectiveLvl++;
         if(effectiveLvl < 6){
-            levelToCalc = (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? 5 : 6;
+            levelToCalc = (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) === 4) ? 5 : 6;
             effectLvl = 6;
         } else if(effectiveLvl < 11){
-            levelToCalc = (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? 10 : 11;
+            levelToCalc = (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) === 4) ? 10 : 11;
             effectLvl = 11;
         } else {
-            return Number(Math.pow(Math.pow(((Math.pow(((hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? Aplusplus : Aplus), 
-            (playerSets["Forsaken Battlemage"] ? 1 : 0) + (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum)== 4) ? Bplusplus: Bplus))/(Math.pow(((hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? Aplus : A),
-             (playerSets["Forsaken Battlemage"] ? 1 : 0) + (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? Bplus: B))), (1/cost)), reduction));
+            return Number(Math.pow(Math.pow(((Math.pow(((hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) === 4) ? Aplusplus : Aplus),
+            (playerSets["Forsaken Battlemage"] ? 1 : 0) + (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum)=== 4) ? Bplusplus: Bplus))/(Math.pow(((hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) == 4) ? Aplus : A),
+             (playerSets["Forsaken Battlemage"] ? 1 : 0) + (hasT4plusOne(skillRow.Class) && Number(skillRow.TierNum) === 4) ? Bplus: B))), (1/cost)), reductionAmtA));
         }
         for(var i = 0; i < levelToCalc; i++){
             costSoFar += Number(skillRow[costCol(i)]);
         }
         
-        return Number(Math.pow(Math.pow(Math.pow(skillRow[effCol(effectLvl)], (playerSets["Forsaken Battlemage"] ? 1 : 0) + Number(skillRow[effBCol(effectLvl)])), (1/costSoFar)), reduction));
+        return Number(Math.pow(Math.pow(Math.pow(skillRow[effCol(effectLvl)], (playerSets["Forsaken Battlemage"] ? 1 : 0) + Number(skillRow[effBCol(effectLvl)])), (1/costSoFar)), reductionAmtA));
+    };
+    function getEffForDualBonusSkill(hasT4plusOne){
+        if(skillRow.Level === 0) return Number(Math.pow(Math.pow((hasT4plusOne ? Aplusplus : Aplus), reductionAmtA)*Math.pow(hasT4plusOne ? Bplusplus : Bplus, reductionAmtB), (1/cost)));
+        return Number(Math.pow((Math.pow((hasT4plusOne ? Aplusplus : Aplus)/(hasT4plusOne ? Aplus : A), reductionAmtA)*Math.pow((hasT4plusOne ? Bplusplus : Bplus)/(hasT4plusOne ? Bplus : B), reductionAmtB)), (1/cost)));
     }
     switch(skillRow.Name){
+            case "Loaded Dice": {
+                if(A === 0) return Number(Math.pow(Math.pow((hasT4plusOne("Rogue") ? Bplusplus : Bplus), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow((hasT4plusOne("Rogue") ? Bplusplus : Bplus)/(hasT4plusOne("Rogue") ? Bplus : B), (1/cost)), reductionAmtA));
+            }
             case "Sprouting Salts": {
-                if(A == 0) return Number(Math.pow(Math.pow(Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus)), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow((Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus))/Math.pow((hasT4plusOne("Alchemist") ? Aplus : A), (hasT4plusOne("Alchemist") ? Bplus : B))), (1/cost)), reduction));
-                break;
+                if(A === 0) return Number(Math.pow(Math.pow(Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus)), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow((Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus))/Math.pow((hasT4plusOne("Alchemist") ? Aplus : A), (hasT4plusOne("Alchemist") ? Bplus : B))), (1/cost)), reductionAmtA));
+            }
+            case "Auric Shot": {
+                return getEffForDualBonusSkill(hasT4plusOne("Alchemist"));
             }
             case "Midas Overflow":{
                 return getEffForMulticastSkill();
             }
-            case "Burning Passion": {
-                return getEffForMulticastSkill();
-            }
             case "Astral Awakening":
-            if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Warlord") ? Math.pow(Aplusplus, 5) : Math.pow(Aplus, 5)), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow((Math.pow(hasT4plusOne("Warlord") ? Aplusplus : Aplus, 5)/Math.pow(hasT4plusOne("Warlord") ? Aplus : A, 5)), (1/cost)), reduction));
-            break;
+            if(A === 0) return Number(Math.pow(Math.pow((hasT4plusOne("Warlord") ? Math.pow(Aplusplus, 5) : Math.pow(Aplus, 5)), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow((Math.pow(hasT4plusOne("Warlord") ? Aplusplus : Aplus, 5)/Math.pow(hasT4plusOne("Warlord") ? Aplus : A, 5)), (1/cost)), reductionAmtA));
             case "Deadly Focus":
                 return getEffForMulticastSkill();
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Rogue") ? Aplusplus : Aplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Rogue") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Rogue") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Rogue") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Rogue") ? Bplus: B))), (1/cost)), reduction));
-                break;
-            case "Deadly Focus":
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Rogue") ? Aplusplus*Bplusplus : Aplus*Bplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((hasT4plusOne("Rogue") ? Aplusplus : Aplus) * (hasT4plusOne("Rogue") ? Bplusplus : Bplus))/((hasT4plusOne("Rogue") ? Aplus : A) * (hasT4plusOne("Rogue") ? Bplus : B)), (1/cost)), reduction));
-                break;
             case "Volcanic Eruption":
                 return getEffForMulticastSkill();
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Knight") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplus: B))), (1/cost)), reduction));
+                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Knight") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplus: B))), (1/cost)), reductionAmtA));
             break;
             case "Barbaric Fury":{
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((hasT4plusOne("Knight") ? Aplusplus : Aplus)/(hasT4plusOne("Knight") ? Aplus : A)), (1/cost)), reduction));
+                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Knight") ? Aplusplus : Aplus), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((hasT4plusOne("Knight") ? Aplusplus : Aplus)/(hasT4plusOne("Knight") ? Aplus : A)), (1/cost)), reductionAmtA));
                 break;
             }
             case "Command Supremacy":
                 return getEffForMulticastSkill();
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Warlord") ? Aplusplus : Aplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Warlord") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Warlord") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplus : B))), (1/cost)), reduction));
+                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Warlord") ? Aplusplus : Aplus), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Warlord") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Warlord") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Warlord") ? Bplus : B))), (1/cost)), reductionAmtA));
                 break;
             case "Divine Wrath":
                 return getEffForMulticastSkill();
-                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Sorcerer") ? Aplusplus : Aplus), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Sorcerer") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Sorcerer") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Sorcerer") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Sorcerer") ? Bplus : B))), (1/cost)), reduction));
+                if(A == 0) return Number(Math.pow(Math.pow((hasT4plusOne("Sorcerer") ? Aplusplus : Aplus), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((Math.pow((hasT4plusOne("Sorcerer") ? Aplusplus : Aplus), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Sorcerer") ? Bplusplus: Bplus))/(Math.pow((hasT4plusOne("Sorcerer") ? Aplus : A), (playerSets["Forsaken Battlemage"] ? 1 : 0) + hasT4plusOne("Sorcerer") ? Bplus : B))), (1/cost)), reductionAmtA));
                 break;
             case "Phantom Control":
             return getEffForMulticastSkill();
-                return Number(Math.pow(Math.pow(((Math.pow( Aplus, (playerSets["Forsaken Battlemage"] ? 1 : 0) + Bplus))/(Math.pow( A, (playerSets["Forsaken Battlemage"] ? 1 : 0) + B))), (1/cost)), reduction));
+                return Number(Math.pow(Math.pow(((Math.pow( Aplus, (playerSets["Forsaken Battlemage"] ? 1 : 0) + Bplus))/(Math.pow( A, (playerSets["Forsaken Battlemage"] ? 1 : 0) + B))), (1/cost)), reductionAmtA));
                 break;
             case "Mark of Death":
                 return getEffForMulticastSkill();
@@ -153,47 +152,53 @@ function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplu
             default:
                 break;
         }
-        if(A == 0) A = 1; //FOR SKILLS THAT DONT GET +1s - Division by 0 Error fixes
+        if(A === 0) A = 1; //FOR SKILLS THAT DONT GET +1s - Division by 0 Error fixes
         switch(skillRow.Name){
+            case "Burning Passion": {
+                return getEffForMulticastSkill();
+            }
+            case "Galvanized Mast":
+                return getEffForMulticastSkill();
+            case "Eventide Afterglow":
+                return getEffForMulticastSkill();
+            case "Ember Arts":
+                return getEffForDualBonusSkill(false);
+            case "Master Thief":
+                return getEffForDualBonusSkill(false);
             case "Warcry":
                 warcryHelpers = B;
                 levelSkill(SearingLight, 0);
-                return Number(Math.pow(Math.pow((Aplus/A), (1/cost)), reduction));
-                break;
+                return Number(Math.pow(Math.pow((Aplus/A), (1/cost)), reductionAmtA));
             case "Cleaving Strike":
                 var critExpo = SPreductions[SelectedBuildDamage][Types.critMult];
-                return Number(Math.pow(Math.pow(((Aplus/A)*(Math.pow((playerProbabilities.crit/100)+Bplus, critExpo)/Math.pow((playerProbabilities.crit/100)+B, critExpo))), (1/cost)), reduction));
-            break;
+                return Number(Math.pow(Math.pow(((Aplus/A)*(Math.pow((playerProbabilities.crit/100)+Bplus, critExpo)/Math.pow((playerProbabilities.crit/100)+B, critExpo))), (1/cost)), reductionAmtA));
             case "Searing Light":
                 if(startingSp > 600 && (SearingLight.Level < 7 && SearingLight.Level >= 1 )){
                     var levelInc = 8 - SearingLight.Level;
-                    return Number(Math.pow(Math.pow((1+SearingLight[effectColA(SearingLight,levelInc)]*warcryHelpers*4*30)/(SearingLight[effectColA(SearingLight,levelInc-1)]*warcryHelpers*4*30), (1/SearingLight[costCol(SearingLight, levelInc-1)])), reduction));
+                    return Number(Math.pow(Math.pow((1+SearingLight[effectColA(SearingLight,levelInc)]*warcryHelpers*4*30)/(SearingLight[effectColA(SearingLight,levelInc-1)]*warcryHelpers*4*30), (1/SearingLight[costCol(SearingLight, levelInc-1)])), reductionAmtA));
                 }
-                return Number(Math.pow(Math.pow((1+Aplus*warcryHelpers*4*30)/(A == 0 || A == 1 ? 1 : 1+A*warcryHelpers*4*30), (1/cost)), reduction));
-            break;
+                return Number(Math.pow(Math.pow((1+Aplus*warcryHelpers*4*30)/(A == 0 || A == 1 ? 1 : 1+A*warcryHelpers*4*30), (1/cost)), reductionAmtA));
             case "Phantom Vengeance":
-                return Number(Math.pow(Math.pow((Aplus/A)*((4+Bplus)/(4+B)), (1/cost)), reduction));
-            break;
+                return Number(Math.pow(Math.pow((Aplus/A)*((4+Bplus)/(4+B)), (1/cost)), reductionAmtA));
             case "Stroke of Luck":
                 if(SelectedBuildDamage == "Dagger"){
                     A = 1;
                     Aplus = 1;
                 }
                 var Beffic = SPreductions[SelectedBuildDamage][Types.rogueDS];
-                if(A == 0 || B == 0) return Number(Math.pow(Math.pow(((Aplus*Bplus)/(1)), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Aplus)/(A)), reduction)*Math.pow(Bplus/B ,Beffic), (1/cost)));
-                break;
+                if(A == 0 || B == 0) return Number(Math.pow(Math.pow(((Aplus*Bplus)/(1)), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((Aplus)/(A)), reductionAmtA)*Math.pow(Bplus/B ,Beffic), (1/cost)));
             case "Voltaic Sails":
-                if(A == 0 || B == 0) return Number(Math.pow(Math.pow(((Aplus*Bplus)/(1)), (1/cost)), reduction));
-                return Number(Math.pow(Math.pow(((Aplus*Bplus)/(A*B)), (1/cost)), reduction));
-                break;
+                if(A == 0 || B == 0) return Number(Math.pow(Math.pow(((Aplus*Bplus)/(1)), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow(((Aplus*Bplus)/(A*B)), (1/cost)), reductionAmtA));
             default:
                 break;
         }
 }
 function calculateBaseEfficieny(skillRow){
 
-    const bonustype = skillRow['BonusTypeA'];
+    const bonusTypeA = skillRow['BonusTypeA'];
+    const bonusTypeB = skillRow['BonusTypeB'];
     const currLvlEFfA = Number(skillRow[effectColA(skillRow, 0)]);
     const nextLvlEFfA = Number(skillRow[effectColA(skillRow, 1)]);
     const nextnextLvlEFfA = Number(skillRow[effectColA(skillRow, 2)]);
@@ -202,26 +207,33 @@ function calculateBaseEfficieny(skillRow){
     const nextnextLvlEFfB = Number(skillRow[effectColB(skillRow, 2)]);
     const nextLvlCost = Number(skillRow[costCol(skillRow, 0)]);
     
-    var reductionAmt = 0;
-    if(Gold.hasOwnProperty(bonustype)){  
-        reductionAmt = playerProbabilities["goldEff"] * Number(Goldreductions[SelectedGoldOption][bonustype]);
+    var reductionAmtA = 0;
+    if(Gold.hasOwnProperty(bonusTypeA)){
+        reductionAmtA = playerProbabilities["goldEff"] * Number(Goldreductions[SelectedGoldOption][bonusTypeA]);
     } else {
-        reductionAmt = Number(SPreductions[SelectedBuildDamage][bonustype]);
+        reductionAmtA = Number(SPreductions[SelectedBuildDamage][bonusTypeA]);
     }
 
-    if(isSpecialEffiencySkill(skillRow.Name)) return CalculateSpecialEfficieny(skillRow, currLvlEFfA, nextLvlEFfA, nextnextLvlEFfA, currLvlEFfB, nextLvlEFfB, nextnextLvlEFfB, nextLvlCost, reductionAmt, bonustype);
+    var reductionAmtB = 0;
+    if(Gold.hasOwnProperty(bonusTypeB)){
+        reductionAmtB = playerProbabilities["goldEff"] * Number(Goldreductions[SelectedGoldOption][bonusTypeB]);
+    } else {
+        reductionAmtB = Number(SPreductions[SelectedBuildDamage][bonusTypeB]);
+    }
+
+    if(isSpecialEffiencySkill(skillRow.Name)) return CalculateSpecialEfficieny(skillRow, currLvlEFfA, nextLvlEFfA, nextnextLvlEFfA, currLvlEFfB, nextLvlEFfB, nextnextLvlEFfB, nextLvlCost, reductionAmtA, reductionAmtB);
     var eff = 0;
-    if(skillRow.TierNum == 4 && hasT4plusOne(skillRow.Class)){
-        if(skillRow.Level == 0){
-            eff = Number(Math.pow(Math.pow((nextnextLvlEFfA), (1/nextLvlCost)), reductionAmt));
+    if(skillRow.TierNum === 4 && hasT4plusOne(skillRow.Class)){
+        if(skillRow.Level === 0){
+            eff = Number(Math.pow(Math.pow((nextnextLvlEFfA), (1/nextLvlCost)), reductionAmtA));
         } else {
-            eff = Number(Math.pow(Math.pow((nextnextLvlEFfA/nextLvlEFfA), (1/nextLvlCost)), reductionAmt));
+            eff = Number(Math.pow(Math.pow((nextnextLvlEFfA/nextLvlEFfA), (1/nextLvlCost)), reductionAmtA));
         }
     } else {
-        if(skillRow.Level == 0){
-            eff = Number(Math.pow(Math.pow((nextLvlEFfA), (1/nextLvlCost)), reductionAmt));
+        if(skillRow.Level === 0){
+            eff = Number(Math.pow(Math.pow((nextLvlEFfA), (1/nextLvlCost)), reductionAmtA));
         } else {
-            eff = Number(Math.pow(Math.pow((nextLvlEFfA/currLvlEFfA), (1/nextLvlCost)), reductionAmt));
+            eff = Number(Math.pow(Math.pow((nextLvlEFfA/currLvlEFfA), (1/nextLvlCost)), reductionAmtA));
         }
     }
     return eff;

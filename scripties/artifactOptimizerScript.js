@@ -491,10 +491,11 @@ views.Artifacts = Backbone.View.extend({
     });
     document.getElementById('relicsSpent').value = printBigScientific(sumSpentRelics);
     if(importedStats.playerStats){
-      LOG(Number(importedStats.playerStats['Lifetime Relics'])-sumSpentRelics);
-      relicsAvailableString = printBigScientific(Number(importedStats.playerStats['Lifetime Relics']) - sumSpentRelics);
-      document.getElementById('relicsAvailable').value = relicsAvailableString;
-    } else  document.getElementById('relicsAvailable').value = "0";
+      //LOG(Number(importedStats.playerStats['Lifetime Relics'])-sumSpentRelics);
+      //relicsAvailableString = printBigScientific(Number(importedStats.playerStats['Lifetime Relics']) - sumSpentRelics);
+      //document.getElementById('relicsAvailable').value = relicsAvailableString;
+        document.getElementById('relicsAvailable').value = Number(importedStats.playerStats['Lifetime Relics']);
+    } else document.getElementById('relicsAvailable').value = "0";
 
     var artis = artifactsOwned >= totalArtifactsThatExist ? totalArtifactsThatExist : artifactsOwned;
     var enchants = artifactsOwned >= totalArtifactsThatExist ? (artifactsOwned%totalArtifactsThatExist) : 0;
@@ -504,7 +505,7 @@ views.Artifacts = Backbone.View.extend({
   }
 });
 var totalArtifactsThatExist = 103;
-var totalEnchantsThatExist = 46;
+var totalEnchantsThatExist = 52;
 views.ArtifactToLevel = Backbone.View.extend({
   // Each person will be shown as a table row
   tagName: 'div',
