@@ -1,4 +1,4 @@
-const dynamicCache = "tt2-optimizer-dynamic-v5.22.0";
+const dynamicCache = "tt2-optimizer-dynamic-v5.26.03";
 
 self.addEventListener('install', function(event){
   //console.log('service worker has been installed')  
@@ -18,8 +18,10 @@ self.addEventListener('fetch', (e) => {
     e.respondWith(
       caches.match(e.request).then((response) => response || fetch(e.request).then(fetchRes => {
         return caches.open(dynamicCache).then(cache => {
-          if(fetchRes.status == 200){
+          if(fetchRes.status === 200 && !e.request.url.endsWith("save") && !e.request.url.endsWith("load")){
              cache.put(e.request.url, fetchRes.clone());
+          } else if(e.request.url.endsWith("save") || e.request.url.endsWith("load") ) {
+              console.log("not caching a db call")
           }
           return fetchRes;
         })

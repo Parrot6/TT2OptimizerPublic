@@ -24,8 +24,9 @@
         <div class="sheetNavigation row no-gutters">
             <div id="sp" class="sheetNavigationButton col no-gutters text-center active"><a href="#sp">SP Optimizer</a></div>
             <div id="artifact" class="sheetNavigationButton col no-gutters text-center"><a href="#artifact">Artifact Optimizer</a></div>
-            <div id="other" class="sheetNavigationButton col-auto no-gutters text-center px-1"><a href="#other">&nbsp&nbspParrot6&nbsp&nbsp</a></div>
-            <div class="col no-gutters text-center"><button style="height: calc(100% - 6px); white-space: nowrap;" class="controllerButtonImport pr-1" onclick="userHardReload()">v5.22.0 (Click To Clear Cache+Reload)</button></div>
+            <div id="saveloadnav" class="sheetNavigationButton col no-gutters text-center"><a href="#saveload">Save/Load</a></div>
+            <div id="other" class="sheetNavigationButton col-auto no-gutters text-center px-1"><a href="https://parrot6.com">&nbsp&nbspParrot6&nbsp&nbsp</a></div>
+            <div class="col no-gutters text-center"><button style="height: calc(100% - 6px); white-space: nowrap;" class="controllerButtonImport pr-1" onclick="userHardReload()">v5.26.03 (Click To Clear Cache+Reload)</button></div>
         </div>
         <div class="row buildTypeSection no-gutters">
             <div class="col-md-3 col-sm-12">
@@ -155,18 +156,10 @@
                                 <div class="col">
                                     <button id="loadSkills" onclick="loadSkillsFrom(playerSkills)" class="controllerButtonImport">Load Skills</button>
                                 </div>
-                                
                             </div>
                             <div id="Skills">
                                 
                             </div>
-                        </div>
-                        <div class="col importCol col-gutters">
-                            <div><Strong>Equipment Sets</Strong>
-                            <div id="EquipmentSets">
-                                
-                            </div>
-                        </div> 
                         </div>
                         <div class="col importCol col-gutters">
                             <div class="row no-gutters">
@@ -177,6 +170,13 @@
                             <div id="Probabilities">
                                 
                             </div>
+                        </div>
+                        <div class="col importCol col-gutters">
+                            <div><Strong>Equipment Sets</Strong>
+                            <div id="EquipmentSets">
+                                
+                            </div>
+                        </div> 
                         </div>
                         <div class="col importCol col-gutters">
                             <div id="Passives">
@@ -234,13 +234,434 @@
                 </div>
             </div>
         </div>
-        <div class="sheet" id="otherProjects">
-            <div class="row no-gutters text-center" style="height: calc(100% - 40px);">
-                <iframe class="w-100 h-100" src="https://www.parrot6.com"></iframe>
+        <div class="sheet" id="otherProjects" onclick="window.open('https://parrot6.com','mywindow');">
+        </div>
+        <div class="sheet" id="saveload">
+            <h1 class="mx-5 text-center">SAVE</h1>
+            <div class="mx-5 text-center">
+                <div class="text-center">To update a build, save with the same display name and Email.</div>
+                <label class="font-weight-bold my-1" for="saveName">* Display Name:</label>
+                <input class="text-center text-primary w-50" id="saveName" name="save_name" type="text" placeholder="HS no qte 3k">
+                <label class="font-weight-bold my-1" for="clancode">Clan Code:</label>
+                <input class="text-center text-primary w-50" maxlength="5" id="clancode" name="clancode" type="text" placeholder="z48ez (case insensitive)">
+                <label class="font-weight-bold my-1" for="email">Email/Passphrase (to Overwrite/Delete later):</label>
+                <input class="text-center text-primary w-50" id="email" name="email" type="text" placeholder="">
+                <label class="font-weight-bold my-1" for="buildnotes">Notes:</label>
+                <input class="text-center text-primary w-50" id="buildnotes" name="buildnotes" type="text" placeholder="ex: Requires X mythic set... ">
+                <div class="text-center alert-danger w-50 mx-auto">
+                    Warning: If you save a build without an email/passphrase, somebody could overwrite/delete your build.
+                    </br>
+                </div>
+                <div class="text-center w-75 mx-auto">
+                    <button class="btn btn-success my-2 mr-2" onclick="populatePreviewSPJson()" type="submit">Preview</button><button class="btn btn-primary my-2 w-50" onclick="saveData()" type="submit">Save</button>
+                </div>
+            </div>
+            <hr class="my-2 border border-primary">
+            <h1 class="mx-5 text-center">SEARCH ID </h1>
+            <div class="mx-5 text-center">
+                <a class="mx-5 text-center w-100" target=”_blank” href="../TT2Builds/">>>> Browse Every Build Here <<<</a>
+                <label class="font-weight-bold my-1" for="loadBuildId">ID:</label>
+                <input class="text-center text-primary w-50" id="loadBuildId" name="build_id" type="text" placeholder="39">
+                <button class="btn btn-primary my-1 w-50" onclick="loadData()" type="submit">Search</button>
+            </div>
+            <div class="text-center p-2 w-50 mx-auto" style="background: whitesmoke; border-radius: 8px; border-style: double; border-width: 3px; border-color: black;" id="loadResultView">
+               load results here....
+            </div>
+            <hr class="my-2 border border-primary">
+            <h1 class="mx-5 text-center">SEARCH BY CLAN</h1>
+            <div class="mx-5 text-center">
+                <label class="font-weight-bold my-1" for="loadClanName" class="fw-bold">* Clan Code:</label>
+                <input class="text-center text-primary w-50" id="loadClanName" name="save_name" type="text" placeholder="z48ez">
+                <button class="btn btn-primary my-1 w-50" onclick="loadClanData()" type="submit">Search</button>
+            </div>
+            <div class="text-center p-2 w-50 mx-auto" style="background: whitesmoke; border-radius: 8px; border-style: double; border-width: 3px; border-color: black;" id="loadClanResultView">
+                load results here....
+            </div>
+            <hr class="my-2 border border-primary">
+            <h1 class="mx-5 text-center">DELETE BUILD</h1>
+            <div class="mx-5 text-center">
+                <label class="font-weight-bold my-1" for="deleteSaveName" class="fw-bold">* Save Name:</label>
+                <input class="text-center text-primary w-50" id="deleteSaveName" name="deleteSaveName" type="text" placeholder="">
+                <label class="font-weight-bold my-1" for="deleteSavePass" class="fw-bold">* Build Email/Pass:</label>
+                <input class="text-center text-primary w-50" id="deleteSavePass" name="deleteSavePass" type="text" placeholder="">
+                <button class="btn btn-danger my-1 w-50" onclick="deleteBuild()" type="submit">Delete</button>
+            </div>
+            <div id="previewWindow" name="previewWindow" style="visibility: hidden;">
+                <div class="row my-1">
+                    <div class="col-1"></div><div id="previewWindowTitle" class="font-weight-bold col text-center">Preview</div><div onclick="closePreview()" class="font-weight-bold col-1 text-right w-25 mr-2">X</div>
+                </div>
+                <div class="row no-gutters font-weight-bold">
+                    <div class="col-12">
+                        <div class="row no-gutters">
+                            <div class="col-6 previewBranch" id="KnightPreview">
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell"></div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview0">-</div>
+                                    <div class="col-4 text-center previewCell"></div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="KnightPreview1">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview2">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview3">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="KnightPreview4">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview5">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview6">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="KnightPreview7">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview8">-</div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview9">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="KnightPreview10"></div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview11"></div>
+                                    <div class="col-4 text-center previewCell" id="KnightPreview12">-</div>
+                                </div>
+                            </div>
+                            <div class="col-6 previewBranch" id="WarlordPreview">
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell"></div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview0">-</div>
+                                    <div class="col-4 text-center previewCell"></div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview1">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview2">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview3">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview4">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview5">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview6">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview7">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview8">-</div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview9">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview10"></div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview11"></div>
+                                    <div class="col-4 text-center previewCell" id="WarlordPreview12">-</div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row no-gutters">
+                            <div class="col-6 previewBranch" id="SorcererPreview">
+                        <div class="row previewRow no-gutters" id="">
+                            <div class="col-4 text-center previewCell"></div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview0">-</div>
+                            <div class="col-4 text-center previewCell"></div>
+                        </div>
+                        <div class="row previewRow no-gutters" id="">
+                            <div class="col-4 text-center previewCell" id="SorcererPreview1">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview2">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview3">-</div>
+                        </div>
+                        <div class="row previewRow no-gutters" id="">
+                            <div class="col-4 text-center previewCell" id="SorcererPreview4">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview5">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview6">-</div>
+                        </div>
+                        <div class="row previewRow no-gutters" id="">
+                            <div class="col-4 text-center previewCell" id="SorcererPreview7">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview8">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview9">-</div>
+                        </div> 
+                        <div class="row previewRow no-gutters" id="">
+                            <div class="col-4 text-center previewCell" id="SorcererPreview10">-</div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview11"></div>
+                            <div class="col-4 text-center previewCell" id="SorcererPreview12"></div>
+                        </div>
+                        </div>  
+                        <div class="col-6 previewBranch" id="RoguePreview">
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell"></div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview0">-</div>
+                                <div class="col-4 text-center previewCell"></div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="RoguePreview1">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview2">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview3">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="RoguePreview4">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview5">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview6">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="RoguePreview7">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview8">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview9">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="RoguePreview10"></div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview11">-</div>
+                                <div class="col-4 text-center previewCell" id="RoguePreview12"></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row no-gutters">
+                            <div class="col-6 previewBranch" id="PetPreview">
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell"></div>
+                                <div class="col-4 text-center previewCell" id="PetPreview0">-</div>
+                                <div class="col-4 text-center previewCell"></div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="PetPreview1">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview2">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview3">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="PetPreview4">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview5">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview6">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="PetPreview7">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview8">-</div>
+                                <div class="col-4 text-center previewCell" id="PetPreview9">-</div>
+                            </div>
+                            <div class="row previewRow no-gutters" id="">
+                                <div class="col-4 text-center previewCell" id="PetPreview10"></div>
+                                <div class="col-4 text-center previewCell" id="PetPreview11"></div>
+                                <div class="col-4 text-center previewCell" id="PetPreview12">-</div>
+                            </div>
+                            </div>
+                            <div class="col-6 previewBranch" id="AlchemistPreview">
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell"></div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview0">-</div>
+                                    <div class="col-4 text-center previewCell"></div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview1">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview2">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview3">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview4">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview5">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview6">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview7">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview8">-</div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview9">-</div>
+                                </div>
+                                <div class="row previewRow no-gutters" id="">
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview10"></div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview11"></div>
+                                    <div class="col-4 text-center previewCell" id="AlchemistPreview12"></div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
+    <style>
+       
+    </style>
     <script>
+        function closePreview(){
+            document.getElementById('previewWindow').style.visibility = "Hidden";
+        }
+        function populatePreviewSPJson(){
+            document.getElementById('previewWindow').style.visibility = "Visible";
+            Object.keys(SPJsonArray).forEach(function(key){
+                var thisele = document.getElementById(saveTalentIDClass[SPJsonArray[key].TalentID] + "Preview" + saveTalentIDSlots[SPJsonArray[key].TalentID])
+                if(thisele !== undefined) thisele.innerText = SPJsonArray[key].Level;
+            })
+        }
+        function populatePreview(index = null){
+            document.getElementById('previewWindow').style.visibility = "Visible";
+            let data;
+            if(index !== null){
+                try{
+                    data = JSON.parse(previewdata[index].json_blob);
+                } catch {
+                    data = previewdata[index].json_blob
+                }
+            } else {
+                try{
+                    data = JSON.parse(previewdata);
+                } catch {
+                    data = previewdata
+                }
+            }
+            console.log(data);
+            Object.keys(data).forEach(function(key){
+                var thisele = document.getElementById(saveTalentIDClass[key] + "Preview" + saveTalentIDSlots[key])
+                if(thisele !== undefined) thisele.innerText = data[key];
+            })
+        }
+        function slimDownSPJSonArray(col = 'TalentID'){
+            let jsonSoFar = {};
+            SPJsonArray.forEach(skill => {
+                jsonSoFar[skill[col]] = skill.Level;
+            })
+            return jsonSoFar;
+        }
+        function getkeyValueSetFromSPJSonArray(key = 'TalentID', value = 'Level'){
+            let jsonSoFar = {};
+            SPJsonArray.forEach(skill => {
+                jsonSoFar[skill[key]] = skill[value];
+            })
+            return jsonSoFar;
+        }
+        function saveData(){
+            document.getElementById('saveName').style.borderColor = "black";
+            if(document.getElementById('saveName').value.trim() == ""){
+                document.getElementById('saveName').style.borderColor = "Red";
+                window.alert("Save name required :o");
+                return;
+            }
+            if(spSpent === 0){
+                window.alert("You have no skills allocated! First create or Load/Modify a build then save!");
+                return;
+            }
+            let postObj = {
+                save_name: document.getElementById('saveName').value,
+                clan_code: document.getElementById('clancode').value.toLowerCase(),
+                build_pass: document.getElementById('email').value.toLowerCase(),
+                build_notes: document.getElementById('buildnotes').value,
+                damage: document.getElementById('buildDmgType').value,
+                gold: document.getElementById('buildGoldType').value,
+                sp: document.getElementById('spSpent').value,
+                json_blob: JSON.stringify(slimDownSPJSonArray())
+            }
+
+            $.ajax({
+                url : "../TT2Builds/save",
+                type : "POST",
+                data : postObj,
+                success : function(data) {
+                    // do something
+                    window.alert("Build saved with name " + document.getElementById('saveName').value);
+                    console.log("Build successfully created!")
+                    document.getElementById('saveName').value = "";
+                    document.getElementById('clancode').value = "";
+                    document.getElementById('email').value = "";
+                    document.getElementById('buildnotes').value = "";
+                },
+                error : function(data) {
+                    window.alert("Build failed to save");
+                    // do something
+                }
+            });
+        }
+        function deleteBuild(){
+            document.getElementById('deleteSaveName').style.borderColor = "black";
+            if(document.getElementById('deleteSaveName').value.trim() == ""){
+                document.getElementById('deleteSaveName').style.borderColor = "Red";
+                window.alert("Delete save name required :o");
+                return;
+            }
+            let postObj = {
+                save_name: document.getElementById('deleteSaveName').value,
+                build_pass: document.getElementById('deleteSavePass').value
+            }
+
+            $.ajax({
+                url : "../TT2Builds/delete",
+                type : "POST",
+                data : postObj,
+                success : function(data) {
+                    // do something
+                    window.alert("Build delete attempted for: " + document.getElementById('deleteSaveName').value);
+                    document.getElementById('deleteSaveName').value = "";
+                    document.getElementById('deleteSavePass').value = "";
+                },
+                error : function(data) {
+                    window.alert("Build failed to delete.");
+                    // do something
+                }
+            });
+        }
+        let preloadData = null
+        let previewdata = null;
+        function loadData(){
+            let postObj = {
+                id: document.getElementById('loadBuildId').value
+            }
+
+            $.ajax({
+                url : "../TT2Builds/load_id",
+                type : "POST",
+                dataType: "json",
+                data : postObj,
+                success : function(data) {
+                    currentPreview = data;
+                    if(data == null){
+                        window.alert("Didn't find build, double check the builds list.");
+                        return;
+                    }
+                    previewdata = data.json_blob;
+                    document.getElementById('loadResultView').innerHTML = "";
+                    document.getElementById('loadClanResultView').innerHTML = "load results here....";
+                    document.getElementById('loadResultView').innerHTML += '<button class="my-1 btn btn-success" onclick="populatePreview()">Preview</button><br>';
+                    document.getElementById('loadResultView').innerHTML += "Damage: " + data.damage + "<br>";
+                    document.getElementById('loadResultView').innerHTML += "Gold: " + data.gold + "<br>";
+                    document.getElementById('loadResultView').innerHTML += "SP: " + data.sp + "<br>";
+                    document.getElementById('loadResultView').innerHTML += "Notes: " + data.build_notes + "<br>";
+                    document.getElementById('loadResultView').innerHTML += "Clan: " + data.clan_code + "<br>";
+                    document.getElementById('loadResultView').innerHTML += '<button class="my-1 btn btn-success" onclick="confirmLoad()">Yes, Load this</button>';
+                },
+                error : function(data) {
+                    window.alert("Didn't find build...");
+                }
+            });
+        }
+        function loadClanData(){
+            let postObj = {
+                clan_code: document.getElementById('loadClanName').value,
+            }
+
+            $.ajax({
+                url : "../TT2Builds/load_clan",
+                type : "POST",
+                dataType : "json",
+                data : postObj,
+                success : function(data) {
+                    console.log(data);
+                    previewdata = data;
+                    document.getElementById('loadResultView').innerHTML = "load results here....";
+                    document.getElementById('loadClanResultView').innerHTML = "";
+                    let index = 0;
+                    Object.entries(data).forEach(([key, value]) => {
+                        document.getElementById('loadClanResultView').innerHTML += `
+                        <div class="col-3"><button class="my-1 btn w-100 btn-success" onclick="populatePreview(${index})">Preview</button></div>
+                        <div class="col-6">${value.save_name} - ${value.damage}/${value.gold}/${value.sp}sp</div>
+                        <div class="col-3"><button class='my-1 w-100 btn btn-success' onclick='loadClanBuild(${key})'> Load </button></div>`;
+                        index++;
+                    });
+                    if(data === null || data === []){
+                        document.getElementById('loadClanResultView').innerHTML = "<b> No Results Found! </b>";
+                    }
+                },
+                error : function(data) {
+                    window.alert("Failed to find any results...");
+                }
+            });
+        }
+        function loadClanBuild(key){
+            loadSkillsFromSave(preloadData[key].json_blob,tempClanBuilds[key].sp, tempClanBuilds[key].damage, tempClanBuilds[key].gold);
+            window.alert("Build loaded..");
+        }
+        function confirmLoad(){
+            loadSkillsFromSave(preloadData.json_blob, preloadData.sp, preloadData.damage, preloadData.gold);
+            window.alert("Build loaded..");
+        }
         function toggleTab(button){
             var items = document.getElementsByClassName("sheetNavigationButton");
             Array.prototype.forEach.call(items, function(el) {
@@ -287,8 +708,8 @@
         var spSpent = 0;
         var startingSp = 0;
         var TI;
+        var TerrifyingPact;
         var enhancedEfficiency = true;
-        var SearingLight;
         var levelUpButton;
         var levelDownButton;
         var rankingBoxRankTemplate;
@@ -346,7 +767,7 @@
                     allText = initialTreeData;
                     var allTextLines = allText.split(/\r\n|\n/);
                     var headings = allTextLines[0].split(',');
-                    console.log(headings);
+                    //console.log(headings);
                     SPJsonArray = [];
                     var pv = 0;
                     for (var i = 1; i < allTextLines.length; i++ ) {
@@ -357,14 +778,10 @@
                             tarr[headings[j].trim()] = currentLine[j].trim();
                         }
                         if(typeof nameConversions[tarr['Name']] !== 'undefined') {
-                            if(tarr['Name'] == "Phantom Vengeance" && pv < 1) {
-                                pv++
-                            } else {
                                 tarr['Name'] = nameConversions[tarr['Name']];
-                            }
                         }
                         //Convert their CSV bonus type to a item of the Types list
-                        console.log(tarr, typeConversions[tarr['BonusTypeA']]);
+                        //console.log(tarr, typeConversions[tarr['BonusTypeA']]);
                         tarr['BonusTypeA'] = typeConversions[tarr['BonusTypeA']];
                         tarr['BonusTypeB'] = typeConversions[tarr['BonusTypeB']];
                         //Ignore set off by default
@@ -375,9 +792,8 @@
                         if(tarr['Name'] == "Tactical Insight"){
                                     TI = tarr;
                         }
-                        //Track this particular skill with a variable for easy reference later
-                        if(tarr['Name'] == "Searing Light"){
-                                    SearingLight = tarr;
+                        if(tarr['Name'] == "Terrifying Pact"){
+                            TerrifyingPact = tarr;
                         }
                     }
                     /**
@@ -422,7 +838,7 @@
                     
                     Reload();
                 }
-                
+
         async function importData(data){
             var text;
             if(!data){
@@ -484,11 +900,7 @@
                 playerSets[value] = true;
             });
 
-            // (function(){
-            // var myObject = JSON.parse('{"id":1,"gender":"male"}');
-            // var e = 'Thu Nov 26 2017 15:44:38'; document.cookie = 'myObj='+ JSON.stringify(myObject) +';expires=' + e;
-            // })()
-            // bake_cookie("import-data", "test");
+            updateProbabilites();
         }
 
         function updateSkillRankingList(){
@@ -514,6 +926,7 @@
                 Name.textContent = element.Name;
                 var value = rankingBoxValueTemplate.cloneNode(true);
                 value.textContent = Number(element.Efficiency).toFixed(4);
+
                 // var SPbox = rankingBoxSPTemplate.cloneNode(true);
                 // SPbox.textContent = element["Co" + element.Level]+"sp";
                 li.appendChild(rank);
@@ -632,8 +1045,6 @@
                 Goldreductions[tarr.Types] = tarr;
             }
         }
-        
-        var test;
 
         function ChangeDamageType(){
             SelectedBuildDamage = buildDmgType.value;
@@ -654,24 +1065,53 @@
             SPJsonArray.forEach((element)=>{
                 levelSkill(element, 0);
             });
+            Reload(); //added
         }
+
         function resetTree(){
             SPJsonArray.forEach(element => {
                 element.Level = 0;
             })
             Reload();
         }
-        function loadSkillsFrom(thisList){
-            resetTree();
-            Object.entries(thisList).forEach(([key, value]) => {
-                for(var i = 0; i < SPJsonArray.length; i++){
-                    if(SPJsonArray[i].Name == key){
-                        levelSkill(SPJsonArray[i], value);
-                        break;
-                    }
+
+        function loadSkillsFrom(thisList, sp = 0, build='Ship', gold='Boss'){
+            var data = thisList;
+            document.getElementById('startingSp').value = sp;
+            updateStartingSp(document.getElementById('startingSp'));
+            document.getElementById('buildDmgType').value = build;
+            document.getElementById('buildDmgType').dispatchEvent(new Event('change'))
+            document.getElementById('buildGoldType').value = gold;
+            document.getElementById('buildGoldType').dispatchEvent(new Event('change'))
+
+            for(let i = 0; i < SPJsonArray.length; i++){
+                SPJsonArray[i].Level = 0;
+                if(data[SPJsonArray[i].Name] !== undefined){
+                    levelSkill(SPJsonArray[i], data[SPJsonArray[i].Name], true);
+                } else {
+                    levelSkill(SPJsonArray[i], 0, true);
                 }
-            });  
+            }
         }
+        function loadSkillsFromSave(thisList, sp = 0, build='Ship', gold='Boss'){
+            var data = JSON.parse(thisList);
+            document.getElementById('startingSp').value = sp;
+            updateStartingSp(document.getElementById('startingSp'));
+            document.getElementById('buildDmgType').value = build;
+            document.getElementById('buildDmgType').dispatchEvent(new Event('change'))
+            document.getElementById('buildGoldType').value = gold;
+            document.getElementById('buildGoldType').dispatchEvent(new Event('change'))
+
+            for(let i = 0; i < SPJsonArray.length; i++){
+                SPJsonArray[i].Level = 0;
+                if(data[SPJsonArray[i].TalentID] !== undefined){
+                    levelSkill(SPJsonArray[i], data[SPJsonArray[i].TalentID], true);
+                } else {
+                    levelSkill(SPJsonArray[i], 0, true);
+                }
+            }
+        }
+
         function updateProbabilites(){
             var probsContainer = Probabilities;
             probsContainer.innerHTML = "";
@@ -692,6 +1132,7 @@
                 input.max = "100";
                 if(max != null) input.max = max;
                 input.min = "0";
+                input.id = valToUpdate + "InputBox";
                 input.onchange = function(){
                     playerProbabilities[valToUpdate] = Number(input.value);
                     refreshSkills();
@@ -700,7 +1141,30 @@
                 newProb.appendChild(newInput);
                 return newProb;
             }
-            probsContainer.appendChild(getNewProb("Gold Efficiency:", ".79", "goldEff", 1));
+            var goldrat = playerProfileStats['Max Prestige Stage'] ?? ".79";
+            if(playerProfileStats['Max Prestige Stage']){
+                if(Number(playerProfileStats['Max Prestige Stage']) < 10000){
+                    goldrat = 1.2;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 20000){
+                    goldrat = 1.1;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 50000){
+                    goldrat = 1.0;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 80000){
+                    goldrat = .85;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 100000){
+                    goldrat = .79;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 120000){
+                    goldrat = .75;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 140000){
+                    goldrat = .70;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 170000){
+                    goldrat = .65;
+                } else if(Number(playerProfileStats['Max Prestige Stage']) < 180000){
+                    goldrat = .63;
+                } 
+            }
+            
+            probsContainer.appendChild(getNewProb("Gold Efficiency:", goldrat.toString(), "goldEff", 1));
             probsContainer.appendChild(getNewProb("Time Spent:", "30", "timeSpentOnBoss", 200));
             probsContainer.appendChild(getNewProb("LS %:", "2.0", "lightningStrikePercent"));
             probsContainer.appendChild(getNewProb("LS Attempts/s:", "200.0", "lightningStrikeAttempts", 500));

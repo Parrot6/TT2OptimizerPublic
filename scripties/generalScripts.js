@@ -1,10 +1,11 @@
 var artis = null;
-var UserList = Backbone.Router.extend({
+var TabRouter = Backbone.Router.extend({
     routes: {//List of URL routes with the corresponding function name which will get called when user will visit a page having URL containing this route
         "sp":                "sp",    // localhost:8080/#list
         "": "sp",
         "artifact":        "artifact",  // localhost:8080/#search/saurav
         "other": "other",  // localhost:8080/#search/kiwis/p7
+        "saveload": "saveload",
         "profile/:userId":     "profile" // localhost:8080/#profile/92
     },
     sp: function() {
@@ -38,6 +39,15 @@ var UserList = Backbone.Router.extend({
          }
          artifactViewToggle();
     },
+    saveload: function() {
+        resetButtons();
+        for (let element of document.getElementsByClassName("buildTypeSection")){
+            element.style.display="none";
+        }
+        document.getElementById('saveloadnav').classList.add("active");
+        document.getElementById('saveload').style.display = "block";
+        document.getElementById('saveload').classList.add("active");
+    },
     other: function(){
         resetButtons();
         for (let element of document.getElementsByClassName("buildTypeSection")){
@@ -66,7 +76,7 @@ function userHardReload(){
 }
 jQuery(document).ready(function() {
     // When the document is ready we instantiate the router
-    var userList = new UserList();
+    var userList = new TabRouter();
     // And tell Backbone to start routing
     Backbone.history.start();
   });
@@ -147,13 +157,4 @@ function percentScientific(bigNum, smallNum){
 function LOG(thisstring, forceprint = false){
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === ""){console.log(thisstring);}
     else if (forceprint) console.log(thisstring);
-}
-function bake_cookie(name, value) {
-    var cookie = [name, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
-    document.cookie = cookie;
-}
-function read_cookie(name) {
-    var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
-    result && (result = JSON.parse(result[1]));
-    return result;
 }

@@ -1,9 +1,11 @@
 /**
  * Level up the given skillrow by the given amount
- * @param {JSON} skillRow 
- * @param {Integer} levelIncrement 
+ * @param {JSON} skillRow
+ * @param {Integer} levelIncrement
+ * @param skipSort
  */
-function levelSkill(skillRow, levelIncrement){
+function levelSkill(skillRow, levelIncrement, skipSort = false){
+    //console.log("leveling: " + skillRow.Name + " up " + levelIncrement + " to " + (skillRow.Level + levelIncrement));
     if(skillRow.Level + levelIncrement <= skillRow.MaxLevel || skillRow.Level + levelIncrement >= 0) {
         skillRow.Level = skillRow.Level + levelIncrement;
     }
@@ -14,7 +16,12 @@ function levelSkill(skillRow, levelIncrement){
     oldCell.parentElement.replaceChild(createSkillCell(skillRow), oldCell);
     playerProbabilities.TiAdditivePerecent = TI["A"+TI.Level];
     playerProbabilities.TiMultiplicativePerecent = TI["B"+TI.Level];
-    updateSkillRankingList();
+    if(!skipSort) updateSkillRankingList();
+
+    //To refresh TerrifyingPact
+    if(skillRow["TalentID"] === "RoyalContract" || skillRow["TalentID"] === "ForbiddenContract"){
+        levelSkill(TerrifyingPact, 0, skipSort);
+    }
 }
 /**
  * 

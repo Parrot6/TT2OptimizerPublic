@@ -2,7 +2,7 @@ function effectColA(skillRow, levelIncrement){
     return "A"+(skillRow.Level+levelIncrement);
 }
 function effectColB(skillRow, levelIncrement){
-return "B"+(skillRow.Level+levelIncrement);
+    return "B"+(skillRow.Level+levelIncrement);
 }
 function costCol(skillRow, levelIncrement){
     return "Co"+(skillRow.Level+levelIncrement);
@@ -54,8 +54,8 @@ function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplu
                 if(A === 0) return Number(Math.pow(Math.pow(Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus)), (1/cost)), reductionAmtA));
                 return Number(Math.pow(Math.pow((Math.pow((hasT4plusOne("Alchemist") ? Aplusplus : Aplus), (hasT4plusOne("Alchemist") ? Bplusplus : Bplus))/Math.pow((hasT4plusOne("Alchemist") ? Aplus : A), (hasT4plusOne("Alchemist") ? Bplus : B))), (1/cost)), reductionAmtA));
             }
-            case "Auric Shot": {
-                return getEffForDualBonusSkill(hasT4plusOne("Alchemist"));
+            case "Weakpoint Throw":{
+                return getEffForDualBonusSkill(hasT4plusOne("Rogue"));
             }
             case "Midas Overflow":{
                 return getEffForMulticastSkill();
@@ -165,19 +165,36 @@ function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplu
                 return getEffForDualBonusSkill(false);
             case "Master Thief":
                 return getEffForDualBonusSkill(false);
-            case "Warcry":
-                warcryHelpers = B;
-                levelSkill(SearingLight, 0);
-                return Number(Math.pow(Math.pow((Aplus/A), (1/cost)), reductionAmtA));
+            case "Terrifying Pact":
+
+                var FcAllocated = false;
+                var RcAllocated = false;
+                var breakEarly = 0;
+                SPJsonArray.some((element)=>{
+                    if(element.TalentID === "ForbiddenContract"){
+                        if(element.Level > 0) FcAllocated = true;
+                        breakEarly++;
+                    }
+                    if(element.TalentID === "RoyalContract"){
+                        if(element.Level > 0) RcAllocated = true;
+                        breakEarly++;
+                    }
+                    if(breakEarly >= 2) return true;
+                })
+                //Set their multipliers to 1 if they aren't allocated
+                if(!FcAllocated){
+                    reductionAmtA = 0;
+                }
+                if(!RcAllocated){
+                    reductionAmtB = 0;
+                }
+                return getEffForDualBonusSkill(false);
             case "Cleaving Strike":
                 var critExpo = SPreductions[SelectedBuildDamage][Types.critMult];
                 return Number(Math.pow(Math.pow(((Aplus/A)*(Math.pow((playerProbabilities.crit/100)+Bplus, critExpo)/Math.pow((playerProbabilities.crit/100)+B, critExpo))), (1/cost)), reductionAmtA));
             case "Searing Light":
-                if(startingSp > 600 && (SearingLight.Level < 7 && SearingLight.Level >= 1 )){
-                    var levelInc = 8 - SearingLight.Level;
-                    return Number(Math.pow(Math.pow((1+SearingLight[effectColA(SearingLight,levelInc)]*warcryHelpers*4*30)/(SearingLight[effectColA(SearingLight,levelInc-1)]*warcryHelpers*4*30), (1/SearingLight[costCol(SearingLight, levelInc-1)])), reductionAmtA));
-                }
-                return Number(Math.pow(Math.pow((1+Aplus*warcryHelpers*4*30)/(A == 0 || A == 1 ? 1 : 1+A*warcryHelpers*4*30), (1/cost)), reductionAmtA));
+                if(A === 0 || B === 0) return Number(Math.pow(Math.pow(((1+(Aplus*Bplus))/(1)), (1/cost)), reductionAmtA));
+                return Number(Math.pow(Math.pow((1+(Aplus*Bplus))/(1+(A*B)), (1/cost)), reductionAmtA));
             case "Phantom Vengeance":
                 return Number(Math.pow(Math.pow((Aplus/A)*((4+Bplus)/(4+B)), (1/cost)), reductionAmtA));
             case "Stroke of Luck":
@@ -195,6 +212,7 @@ function CalculateSpecialEfficieny(skillRow, A, Aplus, Aplusplus, B, Bplus, Bplu
                 break;
         }
 }
+
 function calculateBaseEfficieny(skillRow){
 
     const bonusTypeA = skillRow['BonusTypeA'];
@@ -262,91 +280,142 @@ function spendSP(){
     Reload();
 }
 function spendAllSP(){
+    //All assuming SPJsonArray is sorted by efficiency, index 0 being highest
+    //Repeated walk down list and attempt to level the best efficiency one, keep skipping highest ones if can't be leveled for any reason
     var UpgradeAvailable = true;
     var bestIndex = 0;
-    var toLevel = 0;
-    while(UpgradeAvailable){
+    while(UpgradeAvailable)
+    {
         UpgradeAvailable = false;
-            if(!SPJsonArray[bestIndex].Ignore){
-                    if( SPJsonArray[bestIndex].Level < Number(SPJsonArray[bestIndex].MaxLevel)){
-                        if(SPJsonArray[bestIndex][costCol(SPJsonArray[bestIndex], 0)] <= (startingSp - spSpent)){
-                            if(SPJsonArray[bestIndex].Efficiency > 1.0){
-                                if(SPJsonArray[bestIndex].SPReq <= treeSp[SPJsonArray[bestIndex].Class]){
-                                        toLevel = bestIndex;    
-                                        bestIndex = 0;
-                                        UpgradeAvailable = true;
-                                } else {
-                                    checkPrerequesites(SPJsonArray[bestIndex]);
-                                    allocateBestAvailableOfTree(SPJsonArray[bestIndex].Class, SPJsonArray[bestIndex].SPReq);
-                                    toLevel = bestIndex;    
+            // If it's not ignored
+        if(!SPJsonArray[bestIndex].Ignore)
+        {
+            // Check you have MS required
+            if(Number(SPJsonArray[bestIndex].S0) <= Number(playerProfileStats['Max Prestige Stage'] ?? 160000) )
+            {
+                // Check it's not at max level
+                if (SPJsonArray[bestIndex].Level < Number(SPJsonArray[bestIndex].MaxLevel))
+                {
+                    // Check efficiency so it doesn't spend remaining points on random useless things
+                    if(SPJsonArray[bestIndex].Efficiency > 1.0){
+                        // Check it costs less than available sp
+                        if (SPJsonArray[bestIndex][costCol(SPJsonArray[bestIndex], 0)] <= (startingSp - spSpent))
+                        {
+                            if(SPJsonArray[bestIndex].Level >= 1){
+                                if(canLevel(SPJsonArray[bestIndex])){
+                                    levelSkill(SPJsonArray[bestIndex], 1);
                                     bestIndex = 0;
                                     UpgradeAvailable = true;
+                                    continue; 
                                 }
                             }
-                        }
-                    }
-            }
-        if(UpgradeAvailable){
-            console.log("leveling: ", SPJsonArray[toLevel].Name);
-            checkPrerequesites(SPJsonArray[toLevel]);
-            levelSkill(SPJsonArray[toLevel], 1);
-        } else if(bestIndex < SPJsonArray.length - 1){
-            bestIndex++;
-            UpgradeAvailable = true;
-        }
-    };
-}
-function allocateBestAvailableOfTree(thisClass, toThisSp){
-    
-    var bestIndex = 0;
-    var UpgradeAvailable = true;
-    while(UpgradeAvailable && treeSp[thisClass] < toThisSp){
-        UpgradeAvailable = false;
-        if(!SPJsonArray[bestIndex].Ignore){//If not ignored
-            if(SPJsonArray[bestIndex].Class == thisClass){ //If actually in this tree
-                if(SPJsonArray[bestIndex].SPReq <= treeSp[SPJsonArray[bestIndex].Class]){ //If skill to level up can be leveled up currently
-                    if( SPJsonArray[bestIndex].Level < Number(SPJsonArray[bestIndex].MaxLevel)){ //If skill is not max level
-                        if(SPJsonArray[bestIndex][costCol(SPJsonArray[bestIndex], 0)] <= (startingSp - spSpent)){ //If you have sp available to level it up
-                                    toLevel = bestIndex;    
+                            if(
+                                (Number(SPJsonArray[bestIndex][costCol(SPJsonArray[bestIndex], 0)]) + Math.max((Number(SPJsonArray[bestIndex].SPReq) - treeSp[SPJsonArray[bestIndex].Class]), 0)) 
+                                <= Math.max(0, (startingSp - spSpent))){
+                                if(recursiveTryAllocateUpTo(SPJsonArray[bestIndex])){
                                     bestIndex = 0;
                                     UpgradeAvailable = true;
+                                    continue;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        if(UpgradeAvailable){
-            console.log("Satisfying Prereq SP By Leveling: ", SPJsonArray[toLevel].Name, toThisSp);
-            levelSkill(SPJsonArray[toLevel], 1);
-            checkPrerequesites(SPJsonArray[toLevel]);
-        } else if(bestIndex < SPJsonArray.length - 1){
+        if(bestIndex < SPJsonArray.length - 1){
             bestIndex++;
             UpgradeAvailable = true;
-        } 
+        }
+    };
+}
+function canLevel(skillRow){
+    //Can level in individual tree?
+    if(Number(skillRow.SPReq) <= treeSp[skillRow.Class]){
+        //Is this skill unlocked?
+        if(Number(skillRow.S0) <= Number(playerProfileStats['Max Prestige Stage'] ?? 160000) ){
+            //Do you have prereq skill
+            if(Number(skillRow.Slot) === 0 || getPrereqSkillRow(skillRow).Level !== 0){
+                if( skillRow.Level < Number(skillRow.MaxLevel)) {
+                    if(!skillRow.Ignore){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+function allocateBestAvailableOfTree(thisClass, toThisSp){
+    let bestIndex = 0;
+    //Assuming SPJsonArray is sorted by efficiency
+    while(treeSp[thisClass] <= toThisSp){
+        if(SPJsonArray[bestIndex].Class === thisClass){ //If actually in this tree
+            if(canLevel(SPJsonArray[bestIndex])){
+                levelSkill(SPJsonArray[bestIndex], 1);
+                bestIndex = 0;
+            } else {
+                if(bestIndex === SPJsonArray.length - 1){
+                    //Made it to end of list without being able to level anything up..
+                    return false;
+                }
+                bestIndex++;
+            }
+        } else {
+            bestIndex++;
+        }
     }
     return true;
 };
-function checkPrerequesites(skillRow){
-    if(Number(skillRow.Slot) == 0){
-        if(Number(skillRow.Level) >= 2){
-            return true; 
-        } else { 
-            levelSkill(skillRow, 2-Number(skillRow.Level));
-            return true; 
+
+function recursiveTryAllocateUpTo(skillRow, topLevelCall = true){
+    if(Number(skillRow.TierNum) > 1) {
+        if (skillRow.Ignore) {
+            return false;
         }
-    } 
-    if(skillRow.SPReq > treeSp[skillRow.Class]){
-        console.log("checkPrereq -> allocateBestAvail");
-        allocateBestAvailableOfTree(skillRow.Class, skillRow.SPReq);
-    }
-    var slot = Number(skillRow.Slot);
-    var prereqslot = Math.max(0, slot - 3);
-    var prereqSkillRow = findSlot(getTreeByClass(skillRow.Class), prereqslot);
-    if(prereqSkillRow.Level == 0) {
-        if(prereqSkillRow.Slot == 0) levelSkill(prereqSkillRow, 2);
-        else {
-            levelSkill(prereqSkillRow, 1);
+        if (recursiveTryAllocateUpTo(getPrereqSkillRow(skillRow), false)) {
+            if (canLevel(skillRow)) {
+                if (skillRow.Level === 0) {
+                    levelSkill(skillRow, 1);
+                }
+            } else {
+                return false;
+            }
+            if (!topLevelCall) {
+                //Allocate up to parent nodes SP req
+                if (allocateBestAvailableOfTree(skillRow.Class, Number(findSlot(getTreeByClass(skillRow.Class), Number(skillRow.Slot) + 3).SPReq))) {
+                    return true;
+                } else {
+                    //If for some reason its unable to finish allocating best avail
+                    return false;
+                }
+
+            }
+            return true;
+        } else {
+            //recursive call returned false
+            return false;
         }
     }
-    checkPrerequesites(prereqSkillRow);
+    if(canLevel(skillRow)){
+            levelSkill(skillRow, 2 - skillRow.Level);
+            return true;
+    }
+    return false;
+}
+
+function getPrereqSkillRow(skillRow){
+    var prereqslot = Math.max(0, Number(skillRow.Slot) - 3);
+    return findSlot(getTreeByClass(skillRow.Class), prereqslot);
+}
+function isAnyPrereqIgnored(skillRow){
+    var prereqSkillRow = getPrereqSkillRow(skillRow);
+    // Base Case
+    if(Number(prereqSkillRow.Slot) === 0 && !prereqSkillRow.Ignore) return false;
+    // Not ignored, check its prereq skill
+    if(!prereqSkillRow.Ignore){
+        return isAnyPrereqIgnored(prereqSkillRow);
+    } else {
+        return true;
+    }
 }

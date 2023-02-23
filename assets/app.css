@@ -347,7 +347,75 @@ strong {
       background-color: transparent;
   }
   .box { margin: 2px; }
-
+  #KnightPreview {
+    background-image: url(knightpreview.PNG);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  #WarlordPreview {
+    background-image: url(warlordpreview.png);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  #PetPreview {
+    background-image: url(petpreview.png);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  #SorcererPreview {
+    background-image: url(sorcererpreview.png);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  #RoguePreview {
+    background-image: url(roguepreview.png);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  #AlchemistPreview {
+    background-image: url(alchemistpreview.png);
+    background-size: contain;
+    color: red;
+    height: 200px;
+    max-width: 140px;
+  }
+  .previewCell {
+    height: 40px;
+    padding-top: 15px;
+    padding-left: 5px !important;
+    font-size: medium;
+    text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
+  }
+  #previewWindow {
+    background-color: black;
+    position: fixed;
+    width: 310px;
+    height: auto;
+    top: calc(50% - 315px);
+    left: calc(50% - 150px);
+    color: white;
+    padding: 0 8 8 8;
+    border-radius: 16px;
+    border-width: 3px;
+    border-color: gray;
+    border-style: double;
+}
+.previewBranch {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.previewRow {
+}
   .box0 { background-color: #ff8700; 
     background-image: linear-gradient(to bottom right, #1d1d1d, #9e9e9e);}
   .box1 { background-color: #ff8700; 
